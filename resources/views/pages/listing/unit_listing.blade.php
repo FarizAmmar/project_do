@@ -4,20 +4,69 @@
     <main>
         <div class="container-fluid px-4">
             <h3 class="bg-light text-uppercase mt-4 mb-5 rounded p-3 shadow-sm">Registrasi Unit</h3>
-
             <div id="newCard" style="display: none;">
                 <div class="card mb-4">
                     <div class="card-body">
                         <h5 class="card-title">New Unit Registration</h5>
-                        <form action="{{ route('listing.unit.store') }}" method="POST">
-                            @csrf
-                            <!-- Ntar taro form di sini -->
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form id="unitForm">
+                                    <div class="mb-3">
+                                        <label for="unit_brand" class="form-label">Merk<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control custom-bg-light" id="unit_brand" name="unit_brand" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="unit_type" class="form-label">Model<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control custom-bg-light" id="unit_type" name="unit_type" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="unit_condition" class="form-label">Kondisi Unit<span class="text-danger">*</span></label>
+                                        <select class="form-control custom-bg-light" id="unit_condition" name="unit_condition" required>
+                                            <option value="">Pilih Kondisi Unit</option>
+                                            <option value="New">New</option>
+                                            <option value="Second">Second</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="unit_VIN" class="form-label">No. Rangka<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control custom-bg-light" id="unit_VIN" name="unit_VIN" required>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <form id="unitForm">
+                                    <div class="mb-3">
+                                        <label for="unit_LICENSE" class="form-label">No. Polisi<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control custom-bg-light" id="unit_LICENSE" name="unit_LICENSE" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="unit_LICENSE_type" class="form-label">Jenis No. Polisi<span class="text-danger">*</span></label>
+                                        <select class="form-control custom-bg-light" id="unit_LICENSE_type" name="unit_LICENSE_type" required>
+                                            <option value="">Pilih Jenis No. Polisi</option>
+                                            <option value="Provit">Provit</option>
+                                            <option value="Polsek">Polsek</option>
+                                            <option value="Sementara">Sementara</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="unit_color" class="form-label">Warna<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control custom-bg-light" id="unit_color" name="unit_color" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="unit_RegYear" class="form-label">Tahun Registrasi<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control custom-bg-light" id="unit_RegYear" name="unit_RegYear" required>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary float-end">Submit</button>
+                                        <button type="button" class="btn btn-secondary float-end ms-2" id="closeForm">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -26,10 +75,10 @@
             @endif
 
             <div class="card mb-4">
-                <div class="row ms-1 d-flex justify-content center align-items-center mt-3">
+                <div class="row ms-1 d-flex justify-content-center align-items-center mt-3">
                     <div class="row">
                         <div class="col-12">
-                            <div class="d-flex justify-content-end me-10 m-3">
+                            <div class="d-flex justify-content-end m-3">
 
                             </div>
                         </div>
@@ -51,7 +100,7 @@
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <button class="btn btn-primary" id="newButton">New</button>
+                                                    <button class="btn btn-secondary" id="newButton">New</button>
                                                 </th>
                                                 <th>Merk</th>
                                                 <th>Model</th>
@@ -60,7 +109,7 @@
                                             </tr>
                                         </thead>
 
-                                        <tbody>
+                                        <tbody id="unitTableBody">
                                             @foreach ($units as $unit)
                                                 <tr>
                                                     <td class="align-items-center">
@@ -89,285 +138,14 @@
                                         </tbody>
 
                                     </table>
-                                    <div class="row">
-                                        <div class="col">
-                                            {{ $units->links() }}
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+        </div>
     </main>
-
-    <!-- Modal New -->
-    <!-- <div class="modal fade" id="modalnew" tabindex="-1" role="dialog" aria-labelledby="modalnewLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalnewLabel">
-                        <span class="text-danger">New</span> Registration Unit
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('listing.unit.store') }}" method="POST" id="newForm">
-                    @csrf
-                    @method('POST')
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <label for="unitBrand" class="col-form-label">Brand<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitVin" class="col-form-label">No. Rangka<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitType" class="col-form-label">Tipe<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitRegYear" class="col-form-label">Tahun Registrasi<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <input type="text"
-                                        class="form-control custom-bg-light @error('unitBrand') is-invalid @enderror"
-                                        id="unitBrand" name="unitBrand">
-                                    @error('unitBrand')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text"
-                                        class="form-control custom-bg-light @error('unitVin') is-invalid @enderror"
-                                        id="unitVin" name="unitVin">
-                                    @error('unitVin')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text"
-                                        class="form-control custom-bg-light @error('unitType') is-invalid @enderror"
-                                        id="unitType" name="unitType">
-                                    @error('unitType')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <input type="number"
-                                        class="form-control custom-bg-light @error('unitRegYear') is-invalid @enderror"
-                                        id="unitRegYear" name="unitRegYear" min="1900" max="2099">
-                                    @error('unitRegYear')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <label for="unitCondition" class="col-form-label">Kondisi<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitLicense" class="col-form-label">No. Polisi<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitLicenseType" class="col-form-label">Jenis No. Polisi<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitColor" class="col-form-label">Warna Unit<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <select
-                                        class="form-select custom-bg-light @error('unitCondition') is-invalid @enderror"
-                                        id="unitCondition" name="unitCondition">
-                                        <option value="new" selected>New</option>
-                                        <option value="used">Used</option>
-                                    </select>
-                                    @error('unitCondition')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text"
-                                        class="form-control custom-bg-light @error('unitLicense') is-invalid @enderror"
-                                        id="unitLicense" name="unitLicense">
-                                    @error('unitLicense')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <select
-                                        class="form-select custom-bg-light @error('unitLicenseType') is-invalid @enderror"
-                                        id="unitLicenseType" name="unitLicenseType">
-                                        <option value="prvt">Provit</option>
-                                        <option value="plsk">Polsek</option>
-                                        <option value="smnt">Sementara</option>
-                                    </select>
-                                    @error('unitLicenseType')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text"
-                                        class="form-control custom-bg-light @error('unitColor') is-invalid @enderror"
-                                        id="unitColor" name="unitColor">
-                                    @error('unitColor')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">
-                            Register
-                        </button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Batal
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- Modal: Edit -->
-    <!-- <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalnewLabel">
-                        <span class="text-danger">Edit</span> Registration Unit
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="POST" id="newForm">
-                        @csrf
-                        @method('POST')
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <label for="unitBrand" class="col-form-label">Brand<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitVin" class="col-form-label">No. Rangka<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitType" class="col-form-label">Tipe<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitRegYear" class="col-form-label">Tahun Registrasi<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitBrand"
-                                        name="unitBrand">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitVin"
-                                        name="unitVin">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitType"
-                                        name="unitType">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="number" class="form-control custom-bg-light" id="unitRegYear"
-                                        name="unitRegYear" min="1900" max="2099">
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <label for="unitCondition" class="col-form-label">Kondisi<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitLicense" class="col-form-label">No. Polisi<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitLicenseType" class="col-form-label">Jenis No. Polisi<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="unitColor" class="col-form-label">Warna Unit<span
-                                            class="text-danger">*</span></label>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="mb-3">
-                                    <select class="form-select custom-bg-light" id="unitCondition" name="unitCondition">
-                                        <option value="new" selected>New</option>
-                                        <option value="used">Used</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitLicense"
-                                        name="unitLicense">
-                                </div>
-                                <div class="mb-3">
-                                    <select class="form-select custom-bg-light" id="unitLicenseType"
-                                        name="unitLicenseType">
-                                        <option value="Provit">Provit</option>
-                                        <option value="Polsek">Polsek</option>
-                                        <option value="Sementara">Sementara</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitColor"
-                                        name="unitColor">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="submitBtn">
-                        Register
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Batal
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
 @endsection

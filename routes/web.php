@@ -28,8 +28,11 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('login.logout');
 // Home
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('auth');
 
-// Unit Registration
+// Unit Listing
 Route::get('/listing/unit', [UnitController::class, 'index'])->name('listing.unit')->middleware('auth');
 
+// Unit store to database
+Route::post('/listing/unit', [UnitController::class, 'store'])->name('listing.unit.store')->middleware('auth');
+
 //Driver Page
-Route::get('/entries/driver', [DriverController::class, 'index'])->name('listing.driver')->middleware('auth');
+Route::get('/listing/driver', [DriverController::class, 'index'])->name('listing.driver')->middleware('auth');

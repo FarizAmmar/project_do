@@ -34,5 +34,8 @@ Route::get('/listing/unit', [UnitController::class, 'index'])->name('listing.uni
 // Unit store to database
 Route::post('/listing/unit', [UnitController::class, 'store'])->name('listing.unit.store')->middleware('auth');
 
+// Unit delete from database
+Route::delete('/listing/unit/{id}/{unit_guid}', [UnitController::class, 'destroy'])->name('listing.unit.delete')->middleware('auth');
+
 //Driver Page
 Route::get('/listing/driver', [DriverController::class, 'index'])->name('listing.driver')->middleware('auth');

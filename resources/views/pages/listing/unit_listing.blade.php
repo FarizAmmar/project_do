@@ -12,6 +12,7 @@
                         <form action="{{ route('listing.unit.store') }}" method="POST">
                             @csrf
                             <!-- Ntar taro form di sini -->
+
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -91,18 +92,6 @@
                                     <div class="row">
                                         <div class="col">
                                             {{ $units->links() }}
-                                        </div>
-                                    </div>
-                                    <div id="newCard" style="display: none;">
-                                        <div class="card mb-4">
-                                            <div class="card-body">
-                                                <h5 class="card-title">New Unit Registration</h5>
-                                                <form action="{{ route('listing.unit.store') }}" method="POST">
-                                                    @csrf
-                                                    <!-- Add form fields here -->
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                                </form>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

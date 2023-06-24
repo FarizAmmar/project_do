@@ -5,10 +5,15 @@
         <div class="container-fluid px-4">
             <h3 class="bg-light text-uppercase mt-4 mb-5 rounded p-3 shadow-sm">Registrasi Unit</h3>
 
-            <div class="card mb-4">
-                <div class="card-header">
 
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+            @endif
+
+            <div class="card mb-4">
                 <div class="row ms-1 d-flex justify-content center align-items-center mt-3">
                     <div class="row">
                         <div class="col-12">
@@ -99,10 +104,10 @@
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <form action="" method="POST" id="newForm">
-                        @csrf
-                        @method('POST')
+                <form action="{{ route('listing.unit.store') }}" method="POST" id="newForm">
+                    @csrf
+                    @method('POST')
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="mb-3">
@@ -110,7 +115,7 @@
                                             class="text-danger">*</span></label>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="unitVim" class="col-form-label">No. Rangka<span
+                                    <label for="unitVin" class="col-form-label">No. Rangka<span
                                             class="text-danger">*</span></label>
                                 </div>
                                 <div class="mb-3">
@@ -124,20 +129,44 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitBrand"
-                                        name="unitBrand">
+                                    <input type="text"
+                                        class="form-control custom-bg-light @error('unitBrand') is-invalid @enderror"
+                                        id="unitBrand" name="unitBrand">
+                                    @error('unitBrand')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitVim"
-                                        name="unitVim">
+                                    <input type="text"
+                                        class="form-control custom-bg-light @error('unitVin') is-invalid @enderror"
+                                        id="unitVin" name="unitVin">
+                                    @error('unitVin')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitType"
-                                        name="unitType">
+                                    <input type="text"
+                                        class="form-control custom-bg-light @error('unitType') is-invalid @enderror"
+                                        id="unitType" name="unitType">
+                                    @error('unitType')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" class="form-control custom-bg-light" id="unitRegYear"
-                                        name="unitRegYear" min="1900" max="2099">
+                                    <input type="number"
+                                        class="form-control custom-bg-light @error('unitRegYear') is-invalid @enderror"
+                                        id="unitRegYear" name="unitRegYear" min="1900" max="2099">
+                                    @error('unitRegYear')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -160,40 +189,65 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="mb-3">
-                                    <select class="form-select custom-bg-light" id="unitCondition" name="unitCondition">
+                                    <select
+                                        class="form-select custom-bg-light @error('unitCondition') is-invalid @enderror"
+                                        id="unitCondition" name="unitCondition">
                                         <option value="new" selected>New</option>
                                         <option value="used">Used</option>
                                     </select>
+                                    @error('unitCondition')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitLicense"
-                                        name="unitLicense">
+                                    <input type="text"
+                                        class="form-control custom-bg-light @error('unitLicense') is-invalid @enderror"
+                                        id="unitLicense" name="unitLicense">
+                                    @error('unitLicense')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <select class="form-select custom-bg-light" id="unitLicenseType"
-                                        name="unitLicenseType">
-                                        <option value="Provit">Provit</option>
-                                        <option value="Polsek">Polsek</option>
-                                        <option value="Sementara">Sementara</option>
+                                    <select
+                                        class="form-select custom-bg-light @error('unitLicenseType') is-invalid @enderror"
+                                        id="unitLicenseType" name="unitLicenseType">
+                                        <option value="prvt">Provit</option>
+                                        <option value="plsk">Polsek</option>
+                                        <option value="smnt">Sementara</option>
                                     </select>
+                                    @error('unitLicenseType')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitColor"
-                                        name="unitColor">
+                                    <input type="text"
+                                        class="form-control custom-bg-light @error('unitColor') is-invalid @enderror"
+                                        id="unitColor" name="unitColor">
+                                    @error('unitColor')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="submitBtn">
-                        Register
-                    </button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Batal
-                    </button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">
+                            Register
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Batal
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -220,7 +274,7 @@
                                             class="text-danger">*</span></label>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="unitVim" class="col-form-label">No. Rangka<span
+                                    <label for="unitVin" class="col-form-label">No. Rangka<span
                                             class="text-danger">*</span></label>
                                 </div>
                                 <div class="mb-3">
@@ -238,8 +292,8 @@
                                         name="unitBrand">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" class="form-control custom-bg-light" id="unitVim"
-                                        name="unitVim">
+                                    <input type="text" class="form-control custom-bg-light" id="unitVin"
+                                        name="unitVin">
                                 </div>
                                 <div class="mb-3">
                                     <input type="text" class="form-control custom-bg-light" id="unitType"

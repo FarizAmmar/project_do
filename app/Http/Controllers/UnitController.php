@@ -32,7 +32,33 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validation Rule
+        $validate = $request->validate([
+            'unitBrand' => 'required|max:30',
+            'unitVin' => 'required|max:100',
+            'unitType' => 'required|max:30',
+            'unitRegYear' => 'required|max:4',
+            'unitLicense' => 'required|max:10',
+            'unitLicenseType' => 'required|max:4',
+            'unitColor' => 'required|max:15',
+            'unitCondition' => 'required|max:10',
+        ]);
+
+        // Saving to database
+        $unit = new Unit();
+        $unit->unit_GUID = fake()->uuid();
+        $unit->unit_brand = $validate['unitBrand'];
+        $unit->unit_type = $validate['unitType'];
+        $unit->unit_VIN = $validate['unitVin'];
+        $unit->unit_LICENSE = $validate['unitLicense'];
+        $unit->unit_LICENSE_type = $validate['unitLicenseType'];
+        $unit->unit_RegYear = $validate['unitRegYear'];
+        $unit->unit_color = $validate['unitColor'];
+        $unit->unit_condition = $validate['unitCondition'];
+        $unit->save();
+
+        // Back to unit_listing with response
+        return redirect()->route('listing.unit')->with('success', 'Unit data has been successfully saved');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Driver;
 use Illuminate\Http\Request;
 
 class DriverController extends Controller
@@ -14,6 +15,7 @@ class DriverController extends Controller
         // Driver Listing
         return view('pages.listing.driver_listing', [
             'title' => 'Driver Listing',
+            'drivers' => Driver::latest()->paginate(10)
         ]);
     }
 

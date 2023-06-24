@@ -1,134 +1,151 @@
-        // Variables
-        var drivers = [];
+// Simpan data driver yang diinputkan
+let drivers = [];
 
-        // Register Driver
-        document.getElementById('registerDriverBtn').addEventListener('click', function() {
-            var driverName = document.getElementById('driverName').value;
-            var driverKTP = document.getElementById('driverKTP').value;
-            var driverSTNK = document.getElementById('driverSTNK').value;
-            var driverKendaraan = document.getElementById('driverKendaraan').value;
-            var driverNoPolisi = document.getElementById('driverNoPolisi').value;
-            var driverNoHP = document.getElementById('driverNoHP').value;
-            var driverEmail = document.getElementById('driverEmail').value;
-            var driverPasfoto = document.getElementById('driverPasfoto').value;
+// Fungsi untuk menampilkan data driver ke dalam tabel
+function displayDrivers() {
+  const tbody = document.querySelector("table tbody");
+  tbody.innerHTML = "";
 
-            var driver = {
-                id: drivers.length + 1,
-                nama: driverName,
-                no_ktp: driverKTP,
-                no_stnk: driverSTNK,
-                kendaraan: driverKendaraan,
-                no_polisi: driverNoPolisi,
-                no_hp: driverNoHP,
-                no_email: driverEmail,
-                pasfoto: driverPasfoto
-            };
+  drivers.forEach((driver, index) => {
+    const row = document.createElement("tr");
 
-            drivers.push(driver);
-            showDrivers();
+    // Kolom Option
+    const optionCol = document.createElement("td");
+    const editBtn = document.createElement("a");
+    editBtn.classList.add("text-primary", "text-underline");
+    editBtn.setAttribute("role", "button");
+    editBtn.setAttribute("data-bs-toggle", "modal");
+    editBtn.setAttribute("data-bs-target", "#approveModal");
+    editBtn.innerText = "Edit";
+    editBtn.addEventListener("click", () => {
+      // Mengisi form edit dengan data driver yang akan diubah
+      fillEditForm(index);
+    });
 
-            document.getElementById('newDriverForm').reset();
-            $('#newDriverModal').modal('hide');
-        });
+    optionCol.appendChild(editBtn);
+    row.appendChild(optionCol);
 
-        // Edit Driver
-        $(document).on('click', '.btn-edit', function() {
-            var id = $(this).data('id');
-            var driver = drivers.find(function(d) {
-                return d.id === id;
-            });
+    // Kolom Nama Panggilan
+    const snameCol = document.createElement("td");
+    snameCol.innerText = driver.sname;
+    row.appendChild(snameCol);
 
-            document.getElementById('editDriverId').value = driver.id;
-            document.getElementById('editDriverName').value = driver.nama;
-            document.getElementById('editDriverKTP').value = driver.no_ktp;
-            document.getElementById('editDriverSTNK').value = driver.no_stnk;
-            document.getElementById('editDriverKendaraan').value = driver.kendaraan;
-            document.getElementById('editDriverNoPolisi').value = driver.no_polisi;
-            document.getElementById('editDriverNoHP').value = driver.no_hp;
-            document.getElementById('editDriverEmail').value = driver.no_email;
+    // Kolom Nama Lengkap
+    const lnameCol = document.createElement("td");
+    lnameCol.innerText = driver.lname;
+    row.appendChild(lnameCol);
 
-            $('#editDriverModal').modal('show');
-        });
+    // Kolom KTP
+    const KTPCol = document.createElement("td");
+    KTPCol.innerText = driver.KTP;
+    row.appendChild(KTPCol);
 
-        // Update Driver
-        document.getElementById('updateDriverBtn').addEventListener('click', function() {
-            var id = document.getElementById('editDriverId').value;
-            var driver = drivers.find(function(d) {
-                return d.id === parseInt(id);
-            });
+    // Kolom Email
+    const emailCol = document.createElement("td");
+    emailCol.innerText = driver.email;
+    row.appendChild(emailCol);
 
-            driver.nama = document.getElementById('editDriverName').value;
-            driver.no_ktp = document.getElementById('editDriverKTP').value;
-            driver.no_stnk = document.getElementById('editDriverSTNK').value;
-            driver.kendaraan = document.getElementById('editDriverKendaraan').value;
-            driver.no_polisi = document.getElementById('editDriverNoPolisi').value;
-            driver.no_hp = document.getElementById('editDriverNoHP').value;
-            driver.no_email = document.getElementById('editDriverEmail').value;
+    // Kolom STNK
+    const stnkCol = document.createElement("td");
+    stnkCol.innerText = driver.stnk;
+    row.appendChild(stnkCol);
 
-            showDrivers();
+    // Kolom No. Telp
+    const phoneCol = document.createElement("td");
+    phoneCol.innerText = driver.phone;
+    row.appendChild(phoneCol);
 
-            $('#editDriverModal').modal('hide');
-        });
+    tbody.appendChild(row);
+  });
+}
 
-        // Delete Driver
-        $(document).on('click', '.btn-delete', function() {
-            var id = $(this).data('id');
-            var driverIndex = drivers.findIndex(function(d) {
-                return d.id === id;
-            });
+// Fungsi untuk mengisi form edit dengan data driver yang akan diubah
+function fillEditForm(index) {
+  const driver = drivers[index];
+  document.getElementById("driver_index").value = index;
+  document.getElementById("driver_sname").value = driver.sname;
+  document.getElementById("driver_lname").value = driver.lname;
+  document.getElementById("driver_KTP").value = driver.KTP;
+  document.getElementById("driver_email").value = driver.email;
+  document.getElementById("driver_stnk").value = driver.stnk;
+  document.getElementById("driver_phone").value = driver.phone;
+}
 
-            document.getElementById('confirmDeleteDriverBtn').setAttribute('data-id', id);
+// Fungsi untuk menambahkan driver baru
+function addDriver() {
+  const sname = document.getElementById("driver_sname").value;
+  const lname = document.getElementById("driver_lname").value;
+  const KTP = document.getElementById("driver_KTP").value;
+  const email = document.getElementById("driver_email").value;
+  const stnk = document.getElementById("driver_stnk").value;
+  const phone = document.getElementById("driver_phone").value;
 
-            $('#deleteDriverModal').modal('show');
-        });
+  const newDriver = {
+    sname,
+    lname,
+    KTP,
+    email,
+    stnk,
+    phone,
+  };
 
-        document.getElementById('confirmDeleteDriverBtn').addEventListener('click', function() {
-            var id = document.getElementById('confirmDeleteDriverBtn').getAttribute('data-id');
-            var driverIndex = drivers.findIndex(function(d) {
-                return d.id === parseInt(id);
-            });
+  drivers.push(newDriver);
+  displayDrivers();
 
-            drivers.splice(driverIndex, 1);
-            showDrivers();
+  // Reset form setelah data berhasil ditambahkan
+  document.getElementById("newForm").reset();
+  document.getElementById("modalnew").classList.remove("show");
+  document.body.classList.remove("modal-open");
+  document.querySelector(".modal-backdrop").remove();
+}
 
-            $('#deleteDriverModal').modal('hide');
-        });
+// Fungsi untuk mengupdate data driver
+function updateDriver() {
+  const index = document.getElementById("driver_index").value;
+  const sname = document.getElementById("driver_sname").value;
+  const lname = document.getElementById("driver_lname").value;
+  const KTP = document.getElementById("driver_KTP").value;
+  const email = document.getElementById("driver_email").value;
+  const stnk = document.getElementById("driver_stnk").value;
+  const phone = document.getElementById("driver_phone").value;
 
-        // Show Photo
-        $(document).on('click', '.btn-show-photo', function() {
-            var id = $(this).data('id');
-            var driver = drivers.find(function(d) {
-                return d.id === id;
-            });
+  const updatedDriver = {
+    sname,
+    lname,
+    KTP,
+    email,
+    stnk,
+    phone,
+  };
 
-            document.getElementById('showPhotoImage').src = driver.pasfoto;
+  drivers[index] = updatedDriver;
+  displayDrivers();
 
-            $('#showPhotoModal').modal('show');
-        });
+  // Reset form setelah data berhasil diupdate
+  document.getElementById("newForm").reset();
+  document.getElementById("approveModal").classList.remove("show");
+  document.body.classList.remove("modal-open");
+  document.querySelector(".modal-backdrop").remove();
+}
 
-        // Show Drivers
-        function showDrivers() {
-            var tableBody = document.getElementById('driversTableBody');
-            tableBody.innerHTML = '';
+// Event listener untuk tombol Register pada modal New
+document.getElementById("submitBtn").addEventListener("click", () => {
+  if (document.getElementById("modalnew").classList.contains("show")) {
+    addDriver();
+  } else if (document.getElementById("approveModal").classList.contains("show")) {
+    updateDriver();
+  }
+});
 
-            drivers.forEach(function(driver) {
-                var row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${driver.id}</td>
-                    <td>${driver.nama}</td>
-                    <td>${driver.no_ktp}</td>
-                    <td>${driver.no_stnk}</td>
-                    <td>${driver.kendaraan}</td>
-                    <td>${driver.no_polisi}</td>
-                    <td>${driver.no_hp}</td>
-                    <td>${driver.no_email}</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm btn-show-photo" data-id="${driver.id}">Show Photo</button>
-                        <button class="btn btn-info btn-sm btn-edit" data-id="${driver.id}">Edit</button>
-                        <button class="btn btn-danger btn-sm btn-delete" data-id="${driver.id}">Delete</button>
-                    </td>
-                `;
+// Event listener untuk tombol Close pada modal New
+document.getElementById("modalnew").addEventListener("hidden.bs.modal", () => {
+  document.getElementById("newForm").reset();
+});
 
-                tableBody.appendChild(row);
-            });
-        }
+// Event listener untuk tombol Close pada modal Edit
+document.getElementById("approveModal").addEventListener("hidden.bs.modal", () => {
+  document.getElementById("newForm").reset();
+});
+
+// Menampilkan data driver awal saat halaman dimuat
+displayDrivers();

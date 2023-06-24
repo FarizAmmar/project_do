@@ -5,7 +5,18 @@
         <div class="container-fluid px-4">
             <h3 class="bg-light text-uppercase mt-4 mb-5 rounded p-3 shadow-sm">Registrasi Unit</h3>
 
-
+            <div id="newCard" style="display: none;">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">New Unit Registration</h5>
+                        <form action="{{ route('listing.unit.store') }}" method="POST">
+                            @csrf
+                            <!-- Ntar taro form di sini -->
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
@@ -18,10 +29,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="d-flex justify-content-end me-10 m-3">
-                                <form action="" class="form-inline">
-                                    <input class="form-control" type="search" name="search-unit" id="search"
-                                        style="width: 250px" placeholder="Search..">
-                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -42,8 +50,7 @@
                                             </tr>
                                             <tr>
                                                 <th>
-                                                    <a class="text-primary text-underline" role="button"
-                                                        data-bs-toggle="modal" data-bs-target="#modalnew">New</a>
+                                                    <button class="btn btn-primary" id="newButton">New</button>
                                                 </th>
                                                 <th>Merk</th>
                                                 <th>Model</th>
@@ -86,6 +93,18 @@
                                             {{ $units->links() }}
                                         </div>
                                     </div>
+                                    <div id="newCard" style="display: none;">
+                                        <div class="card mb-4">
+                                            <div class="card-body">
+                                                <h5 class="card-title">New Unit Registration</h5>
+                                                <form action="{{ route('listing.unit.store') }}" method="POST">
+                                                    @csrf
+                                                    <!-- Add form fields here -->
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -95,7 +114,7 @@
     </main>
 
     <!-- Modal New -->
-    <div class="modal fade" id="modalnew" tabindex="-1" role="dialog" aria-labelledby="modalnewLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="modalnew" tabindex="-1" role="dialog" aria-labelledby="modalnewLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -250,10 +269,10 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Modal: Edit -->
-    <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel"
+    <!-- <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="approveModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
@@ -360,5 +379,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
 @endsection

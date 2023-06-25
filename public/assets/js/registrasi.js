@@ -1,10 +1,17 @@
 document.getElementById('newButton').addEventListener('click', function() {
+
     document.getElementById('newCard').style.display = 'block';
 });
 
 document.getElementById('closeForm').addEventListener('click', function() {
     document.getElementById('newCard').style.display = 'none';
 });
+
+document.getElementById('btnEdit').addEventListener('click', function() {
+    document.getElementById('newCard').style.display = 'none';
+});
+
+
 
 // document.getElementById('unitForm').addEventListener('submit', function(e) {
 //     e.preventDefault();

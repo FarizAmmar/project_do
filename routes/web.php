@@ -3,7 +3,7 @@
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\MarketingController;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,8 +34,18 @@ Route::get('/listing/unit', [UnitController::class, 'index'])->name('listing.uni
 // Unit store to database
 Route::post('/listing/unit', [UnitController::class, 'store'])->name('listing.unit.store')->middleware('auth');
 
+// Unit update to database
+Route::put('/listing/unit/{id}/{unit_guid}', [UnitController::class, 'update'])->name('listing.unit.update')->middleware('auth');
+
+
 // Unit delete from database
 Route::delete('/listing/unit/{id}/{unit_guid}', [UnitController::class, 'destroy'])->name('listing.unit.delete')->middleware('auth');
 
 //Driver Page
 Route::get('/listing/driver', [DriverController::class, 'index'])->name('listing.driver')->middleware('auth');
+
+// Session error remover
+Route::get('/clear-errors', function () {
+    Session::forget('errors');
+    return redirect()->back();
+});

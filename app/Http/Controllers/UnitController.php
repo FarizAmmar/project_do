@@ -33,6 +33,12 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
+        // Set session flash only if validation fails
+        if ($request->has('BtnNew')) {
+            session()->flash('showModalNew', true);
+        }
+
+
         // Validation Rule
         $validate = $request->validate([
             'unit_brand' => 'required|max:30',
@@ -76,8 +82,6 @@ class UnitController extends Controller
             if ($unitLicenseExists) {
                 $errors['unit_LICENSE'] = 'The unit license already exists.';
             }
-
-            session()->flash('showModalNew', true);
             return redirect()->back()->withErrors($errors)->withInput();
         }
 
@@ -93,11 +97,6 @@ class UnitController extends Controller
         $unit->unit_color = $validate['unit_color'];
         $unit->unit_condition = $validate['unit_condition'];
         $unit->save();
-
-        // Set session flash only if validation fails
-        if (!$request->has('BtnNew')) {
-            session()->flash('showModalNew', true);
-        }
 
         // Back to unit_listing with response
         return redirect()->route('listing.unit')->with('success', 'Unit data has been successfully saved');
@@ -124,6 +123,11 @@ class UnitController extends Controller
      */
     public function update(Request $request, string $id, string $unit_guid)
     {
+        // Set session flash only if validation succeeds
+        if ($request->has('BtnUpdate')) {
+            session()->flash('showModalEdit', true);
+        }
+
         // Validation Rule
         $validate = $request->validate([
             'unit_brand' => 'required|max:30',
@@ -169,10 +173,9 @@ class UnitController extends Controller
         $unit->save();
 
         // Set session flash only if validation succeeds
-        if (!$request->has('BtnUpdate')) {
-            session()->flash('showModalEdit', true);
+        if ($unit->save()) {
+            session()->forget('showModalEdit');
         }
-
         // Redirect
         return redirect()->route('listing.unit')->with('success', 'Data has been updated successfully.');
     }

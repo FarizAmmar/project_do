@@ -18,9 +18,14 @@
             </a>
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="#">Admin</a>
+                    @if (auth()->user()->access == 'admin')
+                    <!-- Tampilkan konten khusus admin -->
+                    <a class="nav-link" href="{{ route('listing.unit') }}">Admin</a>
+                    @elseif (auth()->user()->access == 'marketing')
                     <a class="nav-link" href="{{ route('listing.unit') }}">Registrasi Unit</a>
                     <a class="nav-link" href="{{ route('listing.driver') }}">Registrasi Driver</a>
+                    @endif
+
                 </nav>
             </div> <!-- Perbaikan sidebar -->
         </div>

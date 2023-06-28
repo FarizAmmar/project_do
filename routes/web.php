@@ -41,8 +41,14 @@ Route::put('/listing/unit/{id}/{unit_guid}', [UnitController::class, 'update'])-
 // Unit delete from database
 Route::delete('/listing/unit/{id}/{unit_guid}', [UnitController::class, 'destroy'])->name('listing.unit.delete')->middleware('auth');
 
-//Driver Page
+// Driver Page
 Route::get('/listing/driver', [DriverController::class, 'index'])->name('listing.driver')->middleware('auth');
+
+// Driver Store
+Route::post('//listing/driver', [DriverController::class,'store'])->name('listing.driver.store')->middleware('auth');
+
+// Driver Update
+Route::put('/listing/driver/{id}/{driver_guid}', [DriverController::class,'update'])->name('listing.driver.update')->middleware('auth');
 
 // Session error remover
 Route::get('/clear-errors', function () {

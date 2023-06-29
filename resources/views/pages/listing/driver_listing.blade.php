@@ -46,7 +46,7 @@
                                                     <button class="btn btn-sm btn-light btn-approve" id="btnEdit" data-bs-toggle="modal" data-bs-target="#editmodal-{{ $driver->id }}-{{ $driver->driver_GUID }}">
                                                         <i class="fas fa-pen-to-square"></i>
                                                     </button>
-                                                    <button type="button" class="btn btn-sm btn-outline-danger btn-reject" data-bs-toggle="modal" data-bs-target="#confirmModal-{{ $driver->id }}-{{ $driver->unit_GUID }}">
+                                                    <button type="button" class="btn btn-sm btn-outline-danger btn-reject" data-bs-toggle="modal" data-bs-target="#modalConf{{ $driver->id }}-{{ $driver->driver_GUID }}">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </div>
@@ -202,7 +202,7 @@
                                 </label>
                                 <input type="text" class="form-control form-control-sm @error('driver_sname')
                                             is-invalid
-                                        @enderror" id="driver_sname" name="driver_sname" value="{{ $driver->driver_sname }}">
+                                        @enderror" id="driver_sname" name="driver_sname" value="{{ old('driver_sname') ? old('driver_sname') : $driver->driver_sname }}">
                                 @error('driver_sname')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -215,7 +215,7 @@
                                 <label for="driver_lname" class="form-label">Nama Lengkap<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('driver_lname')
                                         is-invalid
-                                    @enderror" id="driver_lname" name="driver_lname" value="{{ $driver->driver_lname }}">
+                                    @enderror" id="driver_lname" name="driver_lname" value="{{ old('driver_lname') ? old('driver_lname') : $driver->driver_lname }}">
                                 @error('driver_lname')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -230,7 +230,7 @@
                                 <label for="driver_KTP" class="form-label">Nomer KTP<span class="text-danger">*</span></label>
                                 <input class="form-control form-control-sm @error('driver_KTP')
                                     is-invalid
-                                @enderror" type="text" id="driver_KTP" name="driver_KTP" value="{{ $driver->driver_KTP }}">
+                                @enderror" type="text" id="driver_KTP" name="driver_KTP" value="{{ old('driver_KTP') ? old('driver_KTP') : $driver->driver_KTP }}">
                                 @error('driver_KTP')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -243,7 +243,7 @@
                                 <label for="driver_email" class="form-label">E-Mail<span class="text-danger">*</span></label>
                                 <input type="email" class="form-control form-control-sm @error('driver_email')
                                     is-invalid
-                                @enderror" id="driver_email" name="driver_email" value="{{ $driver->driver_email }}">
+                                @enderror" id="driver_email" name="driver_email" value="{{ old('driver_email') ? old('driver_email') : $driver->driver_email }}">
                                 @error('driver_email')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -258,7 +258,7 @@
                                 <label for="driver_stnk" class="form-label">No. STNK<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('driver_stnk')
                                     is-invalid
-                                @enderror" id="driver_stnk" name="driver_stnk" value="{{ $driver->driver_stnk }}">
+                                @enderror" id="driver_stnk" name="driver_stnk" value="{{ old('driver_stnk') ? old('driver_stnk') : $driver->driver_stnk }}">
                                 @error('driver_stnk')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -271,7 +271,7 @@
                                 <label for="driver_phone" class="form-label">No. Telp<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('driver_phone')
                                     is-invalid
-                                @enderror" id="driver_phone" name="driver_phone" value="{{ $driver->driver_phone }}">
+                                @enderror" id="driver_phone" name="driver_phone" value="{{ old('driver_phone') ? old('driver_phone') : $driver->driver_phone }}">
                                 @error('driver_phone')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -284,6 +284,31 @@
                         <button type="submit" class="btn btn-primary me-2" name="BtnUpdate">Update</button>
                         <button type="button" class="btn btn-secondary" id="closeNewForm" data-bs-dismiss="modal" onclick="clearErrors()">Close</button>
                     </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
+<!-- Modal Confirmation Delete -->
+@foreach ($drivers as $driver)
+<div class="modal fade" id="modalConf{{ $driver->id . "-" . $driver->driver_GUID }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Important Message</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Apakah anda yakin untuk menghapus data unit tersebut?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <form action="{{ route('listing.driver.delete', ['id' => $driver->id, 'driver_guid' => $driver->driver_GUID]) }}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-success">Confirm</button>
                 </form>
             </div>
         </div>
@@ -305,6 +330,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var editData = @json(session('editData'));
+        console.log(editData);
         if (editData) {
             var modal = new bootstrap.Modal(document.getElementById('editmodal-' + editData.id + '-' + editData.driver_guid));
             modal.show();

@@ -156,7 +156,7 @@
                                 <label for="unit_brand" class="form-label">Merk<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('unit_brand')
                                         is-invalid
-                                    @enderror" id="unit_brand" name="unit_brand" value="{{ $unit->unit_brand }}">
+                                    @enderror" id="unit_brand" name="unit_brand" value="{{ old('unit_brand') ? old('unit_brand') : $unit->unit_brand }}">
                                 @error('unit_brand')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -169,7 +169,7 @@
                                 <label for="unit_type" class="form-label">Model<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('unit_type')
                                     is-invalid
-                                @enderror" id="unit_type" name="unit_type" value="{{ $unit->unit_type }}">
+                                @enderror" id="unit_type" name="unit_type" value="{{ old('unit_type') ? old('unit_type') : $unit->unit_type }}">
                                 @error('unit_type')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -185,7 +185,9 @@
                                 <select class="form-control form-control-sm @error('unit_condition')
                                     is-invalid
                                 @enderror" id="unit_condition" name="unit_condition">
-                                    @if ($unit->unit_condition)
+                                    @if (old('unit_type'))
+                                    <option value="{{ old('unit_type') }}" selected hidden>{{ old('unit_type') == 'new' ? 'Baru' : 'Second' }}</option>
+                                    @elseif ($unit->unit_condition)
                                     <option value="{{ $unit->unit_condition }}" selected hidden>{{ $unit->unit_condition == 'new' ? 'Baru' : 'Second' }}</option>
                                     @else
                                     <option value="" hidden>Pilih Kondisi Unit</option>
@@ -205,7 +207,7 @@
                                 <label for="unit_VIN" class="form-label">No. Rangka<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('unit_VIN')
                                     is-invalid
-                                @enderror" id="unit_VIN" name="unit_VIN" value="{{ $unit->unit_VIN  }}" oninput="this.value = this.value.toUpperCase()">
+                                @enderror" id="unit_VIN" name="unit_VIN" value="{{ old('unit_VIN') ? old('unit_VIN'): $unit->unit_VIN  }}" oninput="this.value = this.value.toUpperCase()">
                                 @error('unit_VIN')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -220,7 +222,7 @@
                                 <label for="unit_LICENSE" class="form-label">No. Polisi<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('unit_LICENSE')
                                     is-invalid
-                                @enderror" id="unit_LICENSE" name="unit_LICENSE" value="{{ $unit->unit_LICENSE }}" oninput="this.value = this.value.toUpperCase()">
+                                @enderror" id="unit_LICENSE" name="unit_LICENSE" value="{{ old('unit_LICENSE') ? old('unit_LICENSE') : $unit->unit_LICENSE }}" oninput="this.value = this.value.toUpperCase()">
                                 @error('unit_LICENSE')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -234,7 +236,22 @@
                                 <select class="form-control form-control-sm @error('unit_LICENSE_type')
                                     is-invalid
                                 @enderror" id="unit_LICENSE_type" name="unit_LICENSE_type">
-                                    @if ($unit->unit_LICENSE_type)
+                                    @if (old('unit_LICENSE') )
+                                    <option value="{{ old('unit_LICENSE') }}" selected hidden>
+                                        @switch(old('unit_LICENSE'))
+                                        @case('prvt')
+                                        Provit
+                                        @break
+                                        @case('plsk')
+                                        Polsek
+                                        @break
+                                        @case('smnt')
+                                        Sementara
+                                        @break
+                                        @default
+                                        @endswitch
+                                    </option>
+                                    @elseif ($unit->unit_LICENSE_type)
                                     <option value="{{ $unit->unit_LICENSE_type }}" selected hidden>
                                         @switch($unit->unit_LICENSE_type)
                                         @case('prvt')
@@ -270,7 +287,7 @@
                                 <label for="unit_color" class="form-label">Warna<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('unit_color')
                                     is-invalid
-                                @enderror" id="unit_color" name="unit_color" value="{{ $unit->unit_color }}">
+                                @enderror" id="unit_color" name="unit_color" value="{{ old('unit_color') ? old('unit_color') : $unit->unit_color }}">
                                 @error('unit_color')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -283,7 +300,7 @@
                                 <label for="unit_RegYear" class="form-label">Tahun Registrasi<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('unit_RegYear')
                                     is-invalid
-                                @enderror" id="unit_RegYear" name="unit_RegYear" value="{{ $unit->unit_RegYear }}">
+                                @enderror" id="unit_RegYear" name="unit_RegYear" value="{{ old('unit_RegYear') ? old('unit_RegYear') : $unit->unit_RegYear }}">
                                 @error('unit_RegYear')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -480,8 +497,11 @@
 @elseif(session('showModalEdit'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var modal = new bootstrap.Modal(document.getElementById('editmodal-{{ $unit->id }}-{{ $unit->unit_GUID }}'));
-        modal.show();
+        var editData = @json(session('editData'));
+        if (editData) {
+            var modal = new bootstrap.Modal(document.getElementById('editmodal-' + editData.id + '-' + editData.unit_guid));
+            modal.show();
+        }
     });
 
 </script>

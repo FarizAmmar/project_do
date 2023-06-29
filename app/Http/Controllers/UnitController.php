@@ -126,6 +126,7 @@ class UnitController extends Controller
         // Set session flash only if validation succeeds
         if ($request->has('BtnUpdate')) {
             session()->flash('showModalEdit', true);
+            session()->put('editData', ['id' => $id, 'unit_guid' => $unit_guid]);
         }
 
         // Validation Rule
@@ -186,17 +187,14 @@ class UnitController extends Controller
      */
     public function destroy(string $id, string $unit_guid)
     {
-        // Temukan unit yang akan dihapus berdasarkan $id dan $unit_guid
         $unit = Unit::where('id', $id)
             ->where('unit_guid', $unit_guid)
             ->first();
 
-        // Periksa apakah unit ditemukan
         if (!$unit) {
             return redirect()->route('listing.unit')->with('error', 'Unit not found');
         }
 
-        // Hapus unit dari database
         $unit->delete();
 
         return redirect()->route('listing.unit')->with('success', 'Unit has been deleted successfully');

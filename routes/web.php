@@ -50,6 +50,9 @@ Route::post('//listing/driver', [DriverController::class,'store'])->name('listin
 // Driver Update
 Route::put('/listing/driver/{id}/{driver_guid}', [DriverController::class,'update'])->name('listing.driver.update')->middleware('auth');
 
+// Driver delete from database
+Route::delete('/listing/driver/{id}/{driver_guid}', [DriverController::class, 'destroy'])->name('listing.driver.delete')->middleware('auth');
+
 // Session error remover
 Route::get('/clear-errors', function () {
     Session::forget('errors');

@@ -1,15 +1,15 @@
-document.getElementById('newButton').addEventListener('click', function() {
+// document.getElementById('newButton').addEventListener('click', function() {
 
-    document.getElementById('newCard').style.display = 'block';
-});
+//     document.getElementById('newCard').style.display = 'block';
+// });
 
-document.getElementById('closeForm').addEventListener('click', function() {
-    document.getElementById('newCard').style.display = 'none';
-});
+// document.getElementById('closeForm').addEventListener('click', function() {
+//     document.getElementById('newCard').style.display = 'none';
+// });
 
-document.getElementById('btnEdit').addEventListener('click', function() {
-    document.getElementById('newCard').style.display = 'none';
-});
+// document.getElementById('btnEdit').addEventListener('click', function() {
+//     document.getElementById('newCard').style.display = 'none';
+// });
 
 
 

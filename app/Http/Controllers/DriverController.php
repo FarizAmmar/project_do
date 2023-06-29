@@ -181,8 +181,18 @@ class DriverController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, string $driver_guid)
     {
-        //
+        $driver = Driver::where('id', $id)
+            ->where('driver_GUID', $driver_guid)
+            ->first();
+
+        if (!$driver) {
+            return redirect()->route('listing.unit')->with('error', 'Unit not found');
+        }
+
+        $driver->delete();
+
+        return redirect()->route('listing.driver')->with('success', 'Driver has been deleted successfully');
     }
 }

@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
             $table->string('delivery_GUID');
+            $table->foreignId('delivery_submited_by');
             $table->foreignId('delivery_unit');
             $table->foreignId('delivery_driver');
             $table->string('delivery_senderName');
+            $table->string('delivery_codeUnit');
             $table->string('delivery_bbn');
             $table->string('delivery_sales');
             $table->string('delivery_spv');

@@ -3,7 +3,19 @@
 @section('container')
 <main>
     <div class="container-fluid px-4">
-        <h3 class="bg-light text-uppercase mt-4 mb-5 rounded p-3 shadow-sm">Registrasi Driver</h3>
+        <h3 class="bg-light text-uppercase mt-4 mb-3 rounded p-3 shadow-sm">Registrasi Driver</h3>
+
+        <hr>
+        <div class="ms-2">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item" aria-current="page">Listing</li>
+                    <li class="breadcrumb-item active" aria-current="page">Driver</li>
+                </ol>
+            </nav>
+        </div>
+        <hr>
 
         {{-- Success Alert --}}
         @if (session('success'))

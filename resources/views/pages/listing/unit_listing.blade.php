@@ -3,8 +3,19 @@
 @section('container')
 <main id="mainContainer">
     <div class="container-fluid px-4">
-        <h3 class="bg-light text-uppercase mt-4 mb-5 rounded p-3 shadow-sm">Registrasi Unit</h3>
-        <br>
+        <h3 class="bg-light text-uppercase mt-4 mb-3 rounded p-3 shadow-sm">Registrasi Unit</h3>
+
+        <hr>
+        <div class="ms-2">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item" aria-current="page">Listing</li>
+                    <li class="breadcrumb-item active" aria-current="page">Unit</li>
+                </ol>
+            </nav>
+        </div>
+        <hr>
 
         {{-- Success Alert --}}
         @if (session('success'))
@@ -31,7 +42,8 @@
                                     <thead>
                                         <tr>
                                             <th>Option</th>
-                                            <th colspan="2">Brand</th>
+                                            <th rowspan="2" style="vertical-align: middle; width: 100px;">Unit Code</th>
+                                            <th colspan="2" style="vertical-align: middle;">Brand</th>
                                             <th rowspan="2" style="vertical-align: middle;">Kondisi Unit</th>
                                             <th rowspan="2" style="vertical-align: middle;">No. Rangka</th>
                                             <th colspan="2">No. Polisi</th>
@@ -42,10 +54,10 @@
                                             <th>
                                                 <button class="btn btn-secondary" type="button" data-bs-target="#modalnew" data-bs-toggle="modal">New</button>
                                             </th>
-                                            <th>Merk</th>
-                                            <th>Model</th>
-                                            <th>Tipe</th>
-                                            <th>Jenis</th>
+                                            <th style="vertical-align: middle; width: 150px;">Merk</th>
+                                            <th style="vertical-align: middle;">Model</th>
+                                            <th style="vertical-align: middle; width: 130px;">No</th>
+                                            <th style="vertical-align: middle;">Jenis</th>
                                         </tr>
                                     </thead>
 
@@ -62,6 +74,7 @@
                                                     </button>
                                                 </div>
                                             </td>
+                                            <td>{{ $unit->unit_code }}</td>
                                             <td>{{ $unit->unit_brand }}</td>
                                             <td>{{ $unit->unit_type }}</td>
                                             <td>
@@ -332,6 +345,14 @@
                 <form action="{{ route('listing.unit.store') }}" method="POST">
                     @method('POST')
                     @csrf
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="mb-3">
+                                <label for="unit_code" class="form-label">Unit Code</label>
+                                <input class="form-control form-control-sm bg-light" type="text" name="unit_code" id="unit_code" value="{{ "UNT-" . fake()->unique()->randomNumber(4) }}" readonly>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="mb-3">

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
-use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class DriverController extends Controller
@@ -25,11 +24,6 @@ class DriverController extends Controller
      */
     public function create()
     {
-        // Unit View Entries
-        return view('pages.entries.driver_register', [
-            'title' => 'Driver Registration',
-        ]);
-        //
     }
 
     /**
@@ -194,5 +188,15 @@ class DriverController extends Controller
         $driver->delete();
 
         return redirect()->route('listing.driver')->with('success', 'Driver has been deleted successfully');
+    }
+
+    // Get Driver
+    public function getDriver($id, $driver_guid)
+    {
+        $driver = Driver::where('id', $id)
+            ->where('driver_guid', $driver_guid)
+            ->first();
+
+        return response()->json($driver);
     }
 }

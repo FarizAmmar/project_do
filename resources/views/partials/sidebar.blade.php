@@ -1,7 +1,7 @@
 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
     <div class="sb-sidenav-menu">
         <div class="nav">
-            <a class="nav-link" href="/home">
+            <a class="nav-link {{ $title == 'Home' ? 'active' : '' }}" href="/home">
                 <div class="sb-nav-link-icon">
                     <i class="fas fa-home"></i>
                 </div>
@@ -22,12 +22,13 @@
                     <!-- Tampilkan konten khusus admin -->
                     <a class="nav-link" href="{{ route('listing.unit') }}">Admin</a>
                     @elseif (auth()->user()->access == 'marketing')
-                    <a class="nav-link" href="{{ route('listing.unit') }}">Registrasi Unit</a>
-                    <a class="nav-link" href="{{ route('listing.driver') }}">Registrasi Driver</a>
+                    <a class="nav-link {{ $title == 'Unit Listing' ? 'active' : '' }}" href="{{ route('listing.unit') }}">Registrasi Unit</a>
+                    <a class="nav-link {{ $title == 'Driver Listing' ? 'active' : '' }}" href="{{ route('listing.driver') }}">Registrasi Driver</a>
+                    <a class="nav-link {{ $title == 'Delivery Order Registration' ? 'active' : '' }}" href="{{ route('listing.delivery') }}">Deliver Order</a>
                     @endif
 
                 </nav>
-            </div> <!-- Perbaikan sidebar -->
+            </div>
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>

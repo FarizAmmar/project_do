@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -37,7 +38,6 @@ Route::post('/listing/unit', [UnitController::class, 'store'])->name('listing.un
 // Unit update to database
 Route::put('/listing/unit/{id}/{unit_guid}', [UnitController::class, 'update'])->name('listing.unit.update')->middleware('auth');
 
-
 // Unit delete from database
 Route::delete('/listing/unit/{id}/{unit_guid}', [UnitController::class, 'destroy'])->name('listing.unit.delete')->middleware('auth');
 
@@ -45,13 +45,28 @@ Route::delete('/listing/unit/{id}/{unit_guid}', [UnitController::class, 'destroy
 Route::get('/listing/driver', [DriverController::class, 'index'])->name('listing.driver')->middleware('auth');
 
 // Driver Store
-Route::post('//listing/driver', [DriverController::class,'store'])->name('listing.driver.store')->middleware('auth');
+Route::post('//listing/driver', [DriverController::class, 'store'])->name('listing.driver.store')->middleware('auth');
 
 // Driver Update
-Route::put('/listing/driver/{id}/{driver_guid}', [DriverController::class,'update'])->name('listing.driver.update')->middleware('auth');
+Route::put('/listing/driver/{id}/{driver_guid}', [DriverController::class, 'update'])->name('listing.driver.update')->middleware('auth');
 
 // Driver delete from database
 Route::delete('/listing/driver/{id}/{driver_guid}', [DriverController::class, 'destroy'])->name('listing.driver.delete')->middleware('auth');
+
+// Delivery Order Page
+Route::get('/listing/delivery', [DeliveryController::class, 'index'])->name('listing.delivery')->middleware('auth');
+
+// Delivery Order New Page
+Route::get('/entries/delivery', [DeliveryController::class, 'create'])->name('entries.deliveries')->middleware('auth');
+
+// Delivery Order Store
+Route::post('/listing/delivery', [DeliveryController::class, 'store'])->name('listing.delivery.store')->middleware('auth');
+
+// Get Unit
+Route::get('/get-unit/{id}/{unit_GUID}/{unit_code}', [UnitController::class, 'getUnit']);
+
+// Get Driver
+Route::get('/get-driver/{id}/{unit_GUID}', [DriverController::class, 'getDriver']);
 
 // Session error remover
 Route::get('/clear-errors', function () {

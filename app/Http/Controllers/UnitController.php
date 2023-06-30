@@ -88,6 +88,7 @@ class UnitController extends Controller
         // Saving to database
         $unit = new Unit();
         $unit->unit_GUID = fake()->uuid();
+        $unit->unit_code = $request->input('unit_code');
         $unit->unit_brand = $validate['unit_brand'];
         $unit->unit_type = $validate['unit_type'];
         $unit->unit_VIN = $validate['unit_VIN'];
@@ -97,6 +98,11 @@ class UnitController extends Controller
         $unit->unit_color = $validate['unit_color'];
         $unit->unit_condition = $validate['unit_condition'];
         $unit->save();
+
+        // Set session flash only if validation succeeds
+        if ($unit->save()) {
+            session()->forget('showModalNew');
+        }
 
         // Back to unit_listing with response
         return redirect()->route('listing.unit')->with('success', 'Unit data has been successfully saved');
@@ -198,5 +204,16 @@ class UnitController extends Controller
         $unit->delete();
 
         return redirect()->route('listing.unit')->with('success', 'Unit has been deleted successfully');
+    }
+
+    // get Unit
+    public function getUnit($id, $unit_GUID, $unit_code)
+    {
+        $unit = Unit::where('id', $id)
+            ->where('unit_GUID', $unit_GUID)
+            ->where('unit_code', $unit_code)
+            ->first();
+
+        return response()->json($unit);
     }
 }

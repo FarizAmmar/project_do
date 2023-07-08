@@ -13,20 +13,21 @@ return new class extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('unit_id');
+            $table->foreignId('driver_id')->nullable();
             $table->string('delivery_GUID');
-            $table->foreignId('delivery_submited_by');
-            $table->foreignId('delivery_unit');
-            $table->foreignId('delivery_driver');
+            $table->string('delivery_submited_by')->nullable();
             $table->string('delivery_senderName');
             $table->string('delivery_codeUnit');
             $table->string('delivery_bbn');
             $table->string('delivery_sales');
             $table->string('delivery_spv');
             $table->date('delivery_date');
-            $table->string('delivery_addressFrom');
             $table->string('delivery_addressTo');
-            $table->string('delivery_description');
+            $table->string('delivery_description')->nullable();
+            $table->string('delivery_custemail');
             $table->string('delivery_status');
+            $table->string('delivery_additional')->nullable();
             $table->timestamps();
         });
     }

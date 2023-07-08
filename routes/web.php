@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\ConfirmationController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RequestStatusController;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
@@ -59,8 +61,26 @@ Route::get('/listing/delivery', [DeliveryController::class, 'index'])->name('lis
 // Delivery Order New Page
 Route::get('/entries/delivery', [DeliveryController::class, 'create'])->name('entries.deliveries')->middleware('auth');
 
+// Delivery Order Edit Page
+Route::post('/entries/delivery/{id}/{delivery_GUID}', [DeliveryController::class, 'edit'])->name('entries.deliveries.edit')->middleware('auth');
+
 // Delivery Order Store
 Route::post('/listing/delivery', [DeliveryController::class, 'store'])->name('listing.delivery.store')->middleware('auth');
+
+// Delivery Order Update
+Route::put('/listing/delivery/{id}/{delivery_GUID}', [DeliveryController::class, 'update'])->name('entries.deliveries.update')->middleware('auth');
+
+// Driver delete from database
+Route::delete('/listing/delivery/{id}/{delivery_GUID}', [DeliveryController::class, 'destroy'])->name('entries.deliveries.delete')->middleware('auth');
+
+// Request Status
+Route::get('/listing/request_status', [RequestStatusController::class, 'index'])->name('listing.request.status')->middleware('auth');
+
+// Request Status Entries
+Route::post('/entries/request_status/{id}/{guid}', [RequestStatusController::class, 'edit'])->name('entries.request.status')->middleware('auth');
+
+// Request Status Entries Update
+Route::put('/entries/request_status/{id}/{guid}', [RequestStatusController::class, 'update'])->name('entries.request.status.update')->middleware('auth');
 
 // Get Unit
 Route::get('/get-unit/{id}/{unit_GUID}/{unit_code}', [UnitController::class, 'getUnit']);

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         Unit::factory(20)->create();
 
         // Driver
-        Driver::factory(20)->create();
+        Driver::factory(3)->create();
 
         User::create([
             'name' => 'root',
@@ -39,6 +39,5 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123'),
             'access' => 'marketing',
         ]);
-
     }
 }

@@ -41,7 +41,6 @@ class UnitController extends Controller
 
         // Validation Rule
         $validate = $request->validate([
-            'unit_brand' => 'required|max:30',
             'unit_VIN' => 'required|max:100',
             'unit_type' => 'required|max:30',
             'unit_RegYear' => 'required|max:4',
@@ -50,8 +49,6 @@ class UnitController extends Controller
             'unit_color' => 'required|max:15',
             'unit_condition' => 'required|max:10',
         ], [
-            'unit_brand.required' => 'The unit brand field is required.',
-            'unit_brand.max' => 'The unit brand may not be greater than :max characters.',
             'unit_VIN.required' => 'The unit VIN field is required.',
             'unit_VIN.max' => 'The unit VIN may not be greater than :max characters.',
             'unit_type.required' => 'The unit type field is required.',
@@ -89,7 +86,6 @@ class UnitController extends Controller
         $unit = new Unit();
         $unit->unit_GUID = fake()->uuid();
         $unit->unit_code = $request->input('unit_code');
-        $unit->unit_brand = $validate['unit_brand'];
         $unit->unit_type = $validate['unit_type'];
         $unit->unit_VIN = $validate['unit_VIN'];
         $unit->unit_LICENSE = $validate['unit_LICENSE'];
@@ -137,7 +133,6 @@ class UnitController extends Controller
 
         // Validation Rule
         $validate = $request->validate([
-            'unit_brand' => 'required|max:30',
             'unit_VIN' => 'required|max:100',
             'unit_type' => 'required|max:30',
             'unit_RegYear' => 'required|max:4',
@@ -146,8 +141,6 @@ class UnitController extends Controller
             'unit_color' => 'required|max:15',
             'unit_condition' => 'required|max:10',
         ], [
-            'unit_brand.required' => 'The unit brand field is required.',
-            'unit_brand.max' => 'The unit brand may not be greater than :max characters.',
             'unit_VIN.required' => 'The unit VIN field is required.',
             'unit_VIN.max' => 'The unit VIN may not be greater than :max characters.',
             'unit_type.required' => 'The unit type field is required.',
@@ -169,7 +162,6 @@ class UnitController extends Controller
             ->where('unit_guid', $unit_guid)
             ->firstOrFail();
 
-        $unit->unit_brand = $validate['unit_brand'];
         $unit->unit_type = $validate['unit_type'];
         $unit->unit_VIN = $validate['unit_VIN'];
         $unit->unit_LICENSE = $validate['unit_LICENSE'];

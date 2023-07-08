@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('unit_GUID');
             $table->string('unit_code');
-            $table->string('unit_brand');
             $table->string('unit_type');
             $table->string('unit_condition');
             $table->string('unit_VIN');

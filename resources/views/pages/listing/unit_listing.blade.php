@@ -25,7 +25,7 @@
         </div>
         @endif
 
-        <div class=" card mb-4">
+        <div class="card mb-4">
             <div class="row d-flex justify-content-center align-items-center mt-3">
                 <div class="row">
                     <div class="col-12">
@@ -42,8 +42,9 @@
                                     <thead>
                                         <tr>
                                             <th>Option</th>
-                                            <th rowspan="2" style="vertical-align: middle; width: 100px;">Unit Code</th>
-                                            <th colspan="2" style="vertical-align: middle;">Brand</th>
+                                            <th rowspan="2" style="vertical-align: middle; width: 100px;">Unit Code
+                                            </th>
+                                            <th rowspan="2" style="vertical-align: middle;">Tipe Unit</th>
                                             <th rowspan="2" style="vertical-align: middle;">Kondisi Unit</th>
                                             <th rowspan="2" style="vertical-align: middle;">No. Rangka</th>
                                             <th colspan="2">No. Polisi</th>
@@ -52,10 +53,8 @@
                                         </tr>
                                         <tr>
                                             <th>
-                                                <button class="btn btn-secondary" type="button" data-bs-target="#modalnew" data-bs-toggle="modal">New</button>
+                                                <button class="btn btn-secondary btn-sm" type="button" data-bs-target="#modalnew" data-bs-toggle="modal">New</button>
                                             </th>
-                                            <th style="vertical-align: middle; width: 150px;">Merk</th>
-                                            <th style="vertical-align: middle;">Model</th>
                                             <th style="vertical-align: middle; width: 130px;">No</th>
                                             <th style="vertical-align: middle;">Jenis</th>
                                         </tr>
@@ -75,18 +74,18 @@
                                                 </div>
                                             </td>
                                             <td>{{ $unit->unit_code }}</td>
-                                            <td>{{ $unit->unit_brand }}</td>
                                             <td>{{ $unit->unit_type }}</td>
                                             <td>
                                                 @switch($unit->unit_condition)
                                                 @case('new')
                                                 Baru
                                                 @break
+
                                                 @case('used')
                                                 Second
                                                 @break
-                                                @default
 
+                                                @default
                                                 @endswitch
                                             </td>
                                             <td>{{ $unit->unit_VIN }}</td>
@@ -96,12 +95,15 @@
                                                 @case('prvt')
                                                 Provit
                                                 @break
+
                                                 @case('plsk')
                                                 Polsek
                                                 @break
+
                                                 @case('smnt')
                                                 Sementara
                                                 @break
+
                                                 @default
                                                 @endswitch
                                             </td>
@@ -156,7 +158,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel"><span class="text-primary">Edit</span> Registrasi Unit</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><span class="text-primary">Edit</span>
+                    Registrasi Unit</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="clearErrors()"></button>
             </div>
             <div class="modal-body">
@@ -166,11 +169,11 @@
                     <div class="row">
                         <div class="col">
                             <div class="mb-3">
-                                <label for="unit_brand" class="form-label">Merk<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm @error('unit_brand')
+                                <label for="unit_code" class="form-label">Unit Code</label>
+                                <input type="text" class="form-control form-control-sm bg-light @error('unit_code')
                                         is-invalid
-                                    @enderror" id="unit_brand" name="unit_brand" value="{{ old('unit_brand') ? old('unit_brand') : $unit->unit_brand }}">
-                                @error('unit_brand')
+                                    @enderror" id="unit_code" name="unit_code" value="{{ old('unit_code') ? old('unit_code') : $unit->unit_code }}" readonly>
+                                @error('unit_code')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -179,7 +182,7 @@
                         </div>
                         <div class="col">
                             <div class="mb-3">
-                                <label for="unit_type" class="form-label">Model<span class="text-danger">*</span></label>
+                                <label for="unit_type" class="form-label">Tipe Unit<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('unit_type')
                                     is-invalid
                                 @enderror" id="unit_type" name="unit_type" value="{{ old('unit_type') ? old('unit_type') : $unit->unit_type }}">
@@ -198,10 +201,12 @@
                                 <select class="form-control form-control-sm @error('unit_condition')
                                     is-invalid
                                 @enderror" id="unit_condition" name="unit_condition">
-                                    @if (old('unit_type'))
-                                    <option value="{{ old('unit_type') }}" selected hidden>{{ old('unit_type') == 'new' ? 'Baru' : 'Second' }}</option>
+                                    @if (old('unit_condition'))
+                                    <option value="{{ old('unit_condition') }}" selected hidden>
+                                        {{ old('unit_condition') == 'new' ? 'Baru' : 'Second' }}</option>
                                     @elseif ($unit->unit_condition)
-                                    <option value="{{ $unit->unit_condition }}" selected hidden>{{ $unit->unit_condition == 'new' ? 'Baru' : 'Second' }}</option>
+                                    <option value="{{ $unit->unit_condition }}" selected hidden>
+                                        {{ $unit->unit_condition == 'new' ? 'Baru' : 'Second' }}</option>
                                     @else
                                     <option value="" hidden>Pilih Kondisi Unit</option>
                                     @endif
@@ -220,7 +225,7 @@
                                 <label for="unit_VIN" class="form-label">No. Rangka<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm @error('unit_VIN')
                                     is-invalid
-                                @enderror" id="unit_VIN" name="unit_VIN" value="{{ old('unit_VIN') ? old('unit_VIN'): $unit->unit_VIN  }}" oninput="this.value = this.value.toUpperCase()">
+                                @enderror" id="unit_VIN" name="unit_VIN" value="{{ old('unit_VIN') ? old('unit_VIN') : $unit->unit_VIN }}" oninput="this.value = this.value.toUpperCase()">
                                 @error('unit_VIN')
                                 <div class="invalid-feedback">
                                     {{ $message }}
@@ -249,18 +254,21 @@
                                 <select class="form-control form-control-sm @error('unit_LICENSE_type')
                                     is-invalid
                                 @enderror" id="unit_LICENSE_type" name="unit_LICENSE_type">
-                                    @if (old('unit_LICENSE') )
+                                    @if (old('unit_LICENSE'))
                                     <option value="{{ old('unit_LICENSE') }}" selected hidden>
                                         @switch(old('unit_LICENSE'))
                                         @case('prvt')
                                         Provit
                                         @break
+
                                         @case('plsk')
                                         Polsek
                                         @break
+
                                         @case('smnt')
                                         Sementara
                                         @break
+
                                         @default
                                         @endswitch
                                     </option>
@@ -270,12 +278,15 @@
                                         @case('prvt')
                                         Provit
                                         @break
+
                                         @case('plsk')
                                         Polsek
                                         @break
+
                                         @case('smnt')
                                         Sementara
                                         @break
+
                                         @default
                                         @endswitch
                                     </option>
@@ -321,7 +332,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class=" d-flex justify-content-end">
+                        <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary me-2" name="BtnUpdate">Update</button>
                             <button type="button" class="btn btn-secondary" id="closeFormEdit" data-bs-dismiss="modal" onclick="clearErrors()">Close</button>
                         </div>
@@ -338,7 +349,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel"><span class="text-danger">New</span> Registration Unit</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><span class="text-danger">New</span> Registration
+                    Unit</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="clearErrors()" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -346,30 +358,15 @@
                     @method('POST')
                     @csrf
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-6">
                             <div class="mb-3">
                                 <label for="unit_code" class="form-label">Unit Code</label>
-                                <input class="form-control form-control-sm bg-light" type="text" name="unit_code" id="unit_code" value="{{ "UNT-" . fake()->unique()->randomNumber(4) }}" readonly>
+                                <input class="form-control form-control-sm bg-light" type="text" name="unit_code" id="unit_code" value="{{ 'UNT-' .fake()->unique()->randomNumber(4) }}" readonly>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
+                        <div class="col-6">
                             <div class="mb-3">
-                                <label for="unit_brand" class="form-label">Merk<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-sm custom-bg-light @error('unit_brand')
-                                            is-invalid
-                                        @enderror" id="unit_brand" name="unit_brand" value="{{ old('unit_brand') }}">
-                                @error('unit_brand')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="mb-3">
-                                <label for="unit_type" class="form-label">Model<span class="text-danger">*</span></label>
+                                <label for="unit_type" class="form-label">Tipe Unit<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm custom-bg-light @error('unit_type')
                                         is-invalid
                                     @enderror" id="unit_type" name="unit_type" value="{{ old('unit_type') }}">
@@ -389,7 +386,8 @@
                                     is-invalid
                                 @enderror" id="unit_condition" name="unit_condition">
                                     @if (old('unit_condition'))
-                                    <option value="{{ old('unit_condition') }}" selected hidden>{{ old('unit_condition') == 'new' ? 'Baru' : 'Second' }}</option>
+                                    <option value="{{ old('unit_condition') }}" selected hidden>
+                                        {{ old('unit_condition') == 'new' ? 'Baru' : 'Second' }}</option>
                                     @else
                                     <option value="" hidden>Pilih Kondisi Unit</option>
                                     @endif
@@ -443,12 +441,15 @@
                                         @case('prvt')
                                         Provit
                                         @break
+
                                         @case('plsk')
                                         Polsek
                                         @break
+
                                         @case('smnt')
                                         Sementara
                                         @break
+
                                         @default
                                         @endswitch
                                     </option>
@@ -468,7 +469,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-6">
                             <div class="mb-3">
                                 <label for="unit_color" class="form-label">Warna<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm custom-bg-light @error('unit_color')
@@ -481,7 +482,7 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="col-6">
                             <div class="mb-3">
                                 <label for="unit_RegYear" class="form-label">Tahun Registrasi<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-sm custom-bg-light @error('unit_RegYear')
@@ -505,7 +506,7 @@
     </div>
 </div>
 
-@if(session('showModalNew'))
+@if (session('showModalNew'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var modal = new bootstrap.Modal(document.getElementById('modalnew'));
@@ -513,19 +514,17 @@
     });
 
 </script>
-
-
 @elseif(session('showModalEdit'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var editData = @json(session('editData'));
         if (editData) {
-            var modal = new bootstrap.Modal(document.getElementById('editmodal-' + editData.id + '-' + editData.unit_guid));
+            var modal = new bootstrap.Modal(document.getElementById('editmodal-' + editData.id + '-' + editData
+                .unit_guid));
             modal.show();
         }
     });
 
 </script>
-
 @endif
 @endsection

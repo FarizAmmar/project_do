@@ -19,11 +19,10 @@
             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     @if (auth()->user()->access == 'admin')
-                    <!-- Tampilkan konten khusus admin -->
-                    <a class="nav-link" href="{{ route('listing.unit') }}">Admin</a>
+                    <a class="nav-link {{ $title == 'Driver Listing' ? 'active' : '' }}" href="{{ route('listing.driver') }}">Registrasi Driver</a>
+                    <a class="nav-link {{ $title == 'Request Status' ? 'active' : '' }}" href="{{ route('listing.request.status') }}">Request Status</a>
                     @elseif (auth()->user()->access == 'marketing')
                     <a class="nav-link {{ $title == 'Unit Listing' ? 'active' : '' }}" href="{{ route('listing.unit') }}">Registrasi Unit</a>
-                    <a class="nav-link {{ $title == 'Driver Listing' ? 'active' : '' }}" href="{{ route('listing.driver') }}">Registrasi Driver</a>
                     <a class="nav-link {{ $title == 'Delivery Order Registration' ? 'active' : '' }}" href="{{ route('listing.delivery') }}">Deliver Order</a>
                     @endif
 

@@ -18,8 +18,7 @@ class UnitFactory extends Factory
     {
         return [
             'unit_GUID' => fake()->uuid(),
-            'unit_code' => "UNT-". fake()->unique()->randomNumber(4),
-            'unit_brand' => fake()->randomElement(['Toyota', 'Honda', 'Ford', 'BMW', 'Mercedes-Benz']),
+            'unit_code' => "UNT-" . fake()->unique()->randomNumber(4),
             'unit_type' => fake()->randomElement(['Sedan', 'SUV', 'Hatchback', 'Convertible', 'Coupe']),
             'unit_condition' => fake()->randomElement(['new', 'used']),
             'unit_VIN' => fake()->unique()->regexify('[A-HJ-NPR-Z0-9]{17}'),

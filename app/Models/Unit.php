@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Unit extends Model
 {
@@ -21,4 +22,9 @@ class Unit extends Model
     protected $hidden = [
         'unit_GUID',
     ];
+
+    public function delivery()
+    {
+        return $this->hasMany(Delivery::class, 'unit_id');
+    }
 }

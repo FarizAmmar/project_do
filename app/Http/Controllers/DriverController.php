@@ -38,7 +38,7 @@ class DriverController extends Controller
 
         // Validation Rule
         $validate = $request->validate([
-            'driver_sname' => 'required|min:5|max:10',
+            'driver_sname' => 'required|min:1|max:10',
             'driver_lname' => 'required|min:10|max:30',
             'driver_KTP' => 'required|min:16|max:16',
             'driver_email' => 'email:rfc,dns|required',
@@ -123,7 +123,7 @@ class DriverController extends Controller
 
         // Validation Rule
         $validate = $request->validate([
-            'driver_sname' => 'required|min:5|max:10',
+            'driver_sname' => 'required|min:1|max:10',
             'driver_lname' => 'required|min:10|max:30',
             'driver_KTP' => 'required|min:16|max:16',
             'driver_email' => 'email:rfc,dns|required',

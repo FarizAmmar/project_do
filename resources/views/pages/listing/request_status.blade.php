@@ -3,8 +3,9 @@
 @section('container')
 <main>
     <div class="container-fluid px-4">
-        <div class="bg-light text-uppercase d-flex justify-content-between align-items-center mt-4 mb-3 rounded p-3 shadow-sm">
-            <h3 class="m-0">Delivery Order</h3>
+        <div
+            class="bg-light text-uppercase d-flex justify-content-between align-items-center mt-4 mb-3 rounded p-3 shadow-sm">
+            <h3 class="m-0">Request Status</h3>
         </div>
 
 
@@ -14,7 +15,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
                     <li class="breadcrumb-item" aria-current="page">Listing</li>
-                    <li class="breadcrumb-item active" aria-current="page">Delivery Order</li>
+                    <li class="breadcrumb-item active" aria-current="page">Request Status</li>
                 </ol>
             </nav>
         </div>
@@ -38,21 +39,16 @@
                                 <table class="table-bordered table-striped table">
                                     <thead>
                                         <tr>
-                                            <th style="width:20px;">Option</th>
-                                            <th rowspan="2" style="vertical-align: middle;">Nama</th>
-                                            <th rowspan="2" style="vertical-align: middle;">BBN</th>
-                                            <th rowspan="2" style="vertical-align: middle;">Sales</th>
-                                            <th rowspan="2" style="vertical-align: middle;">SPV</th>
-                                            <th rowspan="2" style="vertical-align: middle;">Tanggal</th>
-                                            <th rowspan="2" style="vertical-align: middle;">Address</th>
-                                            <th rowspan="2" style="vertical-align: middle;">Email</th>
-                                            <th rowspan="2" style="vertical-align: middle;">Deskripsi</th>
-                                            <th rowspan="2" style="vertical-align: middle">Status</th>
-                                        </tr>
-                                        <tr>
-                                            <th>
-                                                <a href="{{ route('entries.deliveries') }}" class="btn btn-secondary btn-sm">New</a>
-                                            </th>
+                                            <th style="width:20px;">Details</th>
+                                            <th style="vertical-align: middle;">Nama</th>
+                                            <th style="vertical-align: middle;">BBN</th>
+                                            <th style="vertical-align: middle;">Sales</th>
+                                            <th style="vertical-align: middle;">SPV</th>
+                                            <th style="vertical-align: middle;">Tanggal</th>
+                                            <th style="vertical-align: middle;">Address</th>
+                                            <th style="vertical-align: middle;">Email</th>
+                                            <th style="vertical-align: middle;">Deskripsi</th>
+                                            <th style="vertical-align: middle">Status</th>
                                         </tr>
                                     </thead>
 
@@ -67,17 +63,23 @@
                                         @foreach ($deliveries as $delivery)
                                         <tr>
                                             <td>
-                                                <div class="d-flex align-items-center">
-                                                    <form action="{{ route('entries.deliveries.edit', ['id' => $delivery->id, 'delivery_GUID' => $delivery->delivery_GUID]) }}" method="POST">
+                                                <div class="d-flex align-items-center justify-content-center">
+                                                    <form
+                                                        action="{{ route('entries.request.status', ['id' => $delivery->id, 'guid' => $delivery->delivery_GUID]) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('POST')
-                                                        <button class="btn btn-sm btn-light btn-approve" id="btnEdit" type="submit">
-                                                            <i class="fas fa-pen-to-square"></i>
+                                                        <button class="btn btn-sm btn-light btn-approve" id="btnEdit"
+                                                            type="submit">
+                                                            <i class="far fa-sticky-note"></i>
                                                         </button>
                                                     </form>
-                                                    <button type="button" class="btn btn-sm btn-outline-danger btn-reject" data-bs-toggle="modal" data-bs-target="#confirmModal-{{ $delivery->id }}-{{ $delivery->delivery_GUID }}">
+                                                    {{-- <button type="button"
+                                                        class="btn btn-sm btn-outline-danger btn-reject"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#confirmModal-{{ $delivery->id }}-{{ $delivery->delivery_GUID }}">
                                                         <i class="fas fa-trash"></i>
-                                                    </button>
+                                                    </button> --}}
                                                 </div>
                                             </td>
                                             <td>{{ $delivery->delivery_senderName }}</td>
@@ -88,7 +90,9 @@
                                             <td>{{ $delivery->delivery_addressTo }}</td>
                                             <td>{{ $delivery->delivery_custemail }}</td>
                                             <td>
-                                                <button class="btn btn-outline-dark btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#notesModal{{ $delivery->id . '-' . $delivery->delivery_GUID }}"">
+                                                <button class="btn btn-outline-dark btn-sm" type="button"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#notesModal{{ $delivery->id . '-' . $delivery->delivery_GUID }}"">
                                                                 <i class=" fas fa-sticky-note"></i>
                                                 </button>
                                             </td>
@@ -98,11 +102,27 @@
                                                 Pending
                                                 @break
 
-                                                @case('A')
-                                                Approve
+                                                @case('PSJ')
+                                                Proses Surat Jalan
                                                 @break
 
+                                                @case('PP')
+                                                Proses PDI
+                                                @break
+
+                                                @case('PCP')
+                                                Proses cuci dan poles
+                                                @break
+
+                                                @case('PAK')
+                                                Proses antrian kirim
+                                                @break
+
+                                                @case('S')
+                                                Proses Kirim
+                                                @break
                                                 @default
+
                                                 @endswitch
                                             </td>
                                         </tr>
@@ -126,7 +146,8 @@
 
 <!-- Modal Note -->
 @foreach ($deliveries as $delivery)
-<div class="modal fade" id="notesModal{{ $delivery->id . '-' . $delivery->delivery_GUID }}" tabindex="-1" aria-labelledby="notesModal" aria-hidden="true">
+<div class="modal fade" id="notesModal{{ $delivery->id . '-' . $delivery->delivery_GUID }}" tabindex="-1"
+    aria-labelledby="notesModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -136,7 +157,8 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col">
-                        <textarea class="form-control form-control-sm bg-light" name="notes" id="notes" cols="15" rows="3" readonly>{{ $delivery->delivery_description }}</textarea>
+                        <textarea class="form-control form-control-sm bg-light" name="notes" id="notes" cols="15"
+                            rows="3" readonly>{{ $delivery->delivery_description }}</textarea>
                     </div>
                 </div>
             </div>
@@ -150,7 +172,8 @@
 
 <!-- Modal Confirmation Delete -->
 @foreach ($deliveries as $delivery)
-<div class="modal fade" id="confirmModal-{{ $delivery->id }}-{{ $delivery->delivery_GUID }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmModal-{{ $delivery->id }}-{{ $delivery->delivery_GUID }}" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -162,7 +185,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <form action="{{ route('entries.deliveries.delete', ['id' => $delivery->id, 'delivery_GUID' => $delivery->delivery_GUID]) }}" method="POST">
+                <form
+                    action="{{ route('entries.deliveries.delete', ['id' => $delivery->id, 'delivery_GUID' => $delivery->delivery_GUID]) }}"
+                    method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-success">Confirm</button>

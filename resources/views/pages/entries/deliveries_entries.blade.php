@@ -1,100 +1,91 @@
 @extends('layouts.main')
 
 @section('container')
-    <main>
-        <div class="container px-4">
-            <div
-                class="bg-light text-uppercase d-flex justify-content-between align-items-center mt-4 mb-3 rounded p-3 shadow-sm">
-                <h3 class="m-0">Delivery Order</h3>
-                <span class="text-danger">
-                    <h3>New</h3>
-                </span>
-            </div>
+<main>
+    <div class="container px-4">
+        <div class="bg-light text-uppercase d-flex justify-content-between align-items-center mt-4 mb-3 rounded p-3 shadow-sm">
+            <h3 class="m-0">Delivery Order</h3>
+            <span class="text-danger">
+                <h3>New</h3>
+            </span>
+        </div>
 
-            <hr>
-            {{-- Breadcumb --}}
-            <div class="ms-2">
-                <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item" aria-current="page">Listing</li>
-                        <li class="breadcrumb-item" aria-current="page">Delivery Order</li>
-                        <li class="breadcrumb-item active" aria-current="page">Delivery Registration</li>
-                    </ol>
-                </nav>
-            </div>
-            <hr>
+        <hr>
+        {{-- Breadcumb --}}
+        <div class="ms-2">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item" aria-current="page">Listing</li>
+                    <li class="breadcrumb-item" aria-current="page">Delivery Order</li>
+                    <li class="breadcrumb-item active" aria-current="page">Delivery Registration</li>
+                </ol>
+            </nav>
+        </div>
+        <hr>
 
-            <form action="{{ route('listing.delivery.store') }}" class="mb-5" method="POST">
-                @csrf
-                @method('POST')
-                <div class="row">
-                    <div class="col-6">
-                        {{-- Unit Registration --}}
-                        <div class="row">
+        <form action="{{ route('listing.delivery.store') }}" class="mb-5" method="POST">
+            @csrf
+            @method('POST')
+            <div class="row">
+                <div class="col-6">
+                    {{-- Unit Registration --}}
+                    <div class="row">
 
-                            <div class="col">
-                                <div class="card">
-                                    <div class="card-header">
-                                        Unit Details
+                        <div class="col">
+                            <div class="card">
+                                <div class="card-header">
+                                    Unit Details
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-3">
+                                        <label for="unit_code" class="col-3 col-form-label text-end">Kode Unit</label>
+                                        <div class="col-3">
+                                            <input type="text" class="form-control form-control-sm bg-light" id="unit_id" name="unit_id" hidden>
+                                            <input type="text" class="form-control form-control-sm bg-light" id="unit_code" name="unit_code" readonly>
+                                        </div>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="row mb-3">
-                                            <label for="unit_code" class="col-3 col-form-label text-end">Kode Unit</label>
-                                            <div class="col-3">
-                                                <input type="text" class="form-control form-control-sm bg-light"
-                                                    id="unit_id" name="unit_id" hidden>
-                                                <input type="text" class="form-control form-control-sm bg-light"
-                                                    id="unit_code" name="unit_code" readonly>
-                                            </div>
+                                    <div class="row mb-3">
+                                        <label for="unit_type" class="col-3 col-form-label text-end">Tipe Unit</label>
+                                        <div class="col-4">
+                                            <input type="text" class="form-control form-control-sm bg-light" id="unit_type" name="unit_type" readonly>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label for="unit_brand" class="col-3 col-form-label text-end">Merk Unit</label>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control form-control-sm bg-light"
-                                                    id="unit_brand" name="unit_brand" readonly>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="unit_license" class="col-3 col-form-label text-end">No.
+                                            Polisi</label>
+                                        <div class="col-4">
+                                            <input type="text" class="form-control form-control-sm bg-light" id="unit_license" name="unit_license" readonly>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label for="unit_license" class="col-3 col-form-label text-end">No.
-                                                Polisi</label>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control form-control-sm bg-light"
-                                                    id="unit_license" name="unit_license" readonly>
-                                            </div>
-                                            <label for="unit_license" class="col-2 col-form-label text-end">Tipe</label>
-                                            <div class="col-3">
-                                                <input type="text" class="form-control form-control-sm bg-light"
-                                                    id="unit_license_type" name="unit_license_type" readonly>
-                                            </div>
+                                        <label for="unit_license" class="col-2 col-form-label text-end">Tipe</label>
+                                        <div class="col-3">
+                                            <input type="text" class="form-control form-control-sm bg-light" id="unit_license_type" name="unit_license_type" readonly>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label for="unit_condition" class="col-3 col-form-label text-end">Kondisi
-                                                Unit</label>
-                                            <div class="col-sm-2">
-                                                <input type="text" class="form-control form-control-sm bg-light"
-                                                    id="unit_condition" name="unit_condition" readonly>
-                                            </div>
-                                            <label for="unit_color" class="col-3 col-form-label text-end">Warna Unit</label>
-                                            <div class="col-4">
-                                                <input type="text" class="form-control form-control-sm bg-light"
-                                                    id="unit_color" name="unit_color" readonly>
-                                            </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="unit_condition" class="col-3 col-form-label text-end">Kondisi
+                                            Unit</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control form-control-sm bg-light" id="unit_condition" name="unit_condition" readonly>
                                         </div>
-                                        <div class="row mb-3">
-                                            <label for="unit_vin" class="col-3 col-form-label text-end">No. Rangka</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control form-control-sm bg-light"
-                                                    id="unit_vin" name="unit_vin" readonly>
-                                            </div>
+                                        <label for="unit_color" class="col-3 col-form-label text-end">Warna Unit</label>
+                                        <div class="col-4">
+                                            <input type="text" class="form-control form-control-sm bg-light" id="unit_color" name="unit_color" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="unit_vin" class="col-3 col-form-label text-end">No. Rangka</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control form-control-sm bg-light" id="unit_vin" name="unit_vin" readonly>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
-                        <div class="row mt-3">
+                    </div>
+
+                    {{-- <div class="row mt-3">
                             <div class="col">
                                 <div class="card">
                                     <div class="card-header">
@@ -145,123 +136,139 @@
 
                                 </div>
                             </div>
+                        </div> --}}
+
+                </div>
+
+                <div class="col-6 h-100">
+                    {{-- Personal Selection --}}
+                    <div class="card">
+                        <div class="card-header">
+                            Detail Registration
                         </div>
+                        <div class="card-body">
+                            <!-- Form fields -->
+                            <form action="{{ route('listing.delivery.store') }}" method="POST">
+                                @csrf
 
-                    </div>
-
-                    <div class="col-6 h-100">
-                        {{-- Personal Selection --}}
-                        <div class="card">
-                            <div class="card-header">
-                                Detail Registration
-                            </div>
-                            <div class="card-body">
+                                <!-- Atas Nama -->
                                 <div class="form-group row mb-3">
-                                    <label for="delivery_senderName"
-                                        class="col-sm-3 col-form-label text-end text-end">Atas
-                                        Nama</label>
+                                    <label for="delivery_senderName" class="col-sm-3 col-form-label text-end">Atas Nama</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"
-                                            id="delivery_senderName" name="delivery_senderName">
+                                        <input type="text" class="form-control form-control-sm @error('delivery_senderName') is-invalid @enderror" id="delivery_senderName" name="delivery_senderName" value="{{ old('delivery_senderName') }}">
+                                        @error('delivery_senderName')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <!-- Daerah BBN -->
                                 <div class="form-group row mb-3">
-                                    <label for="delivery_bbn" class="col-sm-3 col-form-label text-end">BBN</label>
+                                    <label for="delivery_bbn" class="col-sm-3 col-form-label text-end">Daerah BBN</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" id="delivery_bbn"
-                                            name="delivery_bbn">
+                                        <input type="text" class="form-control form-control-sm @error('delivery_bbn') is-invalid @enderror" id="delivery_bbn" name="delivery_bbn" value="{{ old('delivery_bbn') }}">
+                                        @error('delivery_bbn')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <!-- Sales -->
                                 <div class="form-group row mb-3">
                                     <label for="delivery_sales" class="col-sm-3 col-form-label text-end">Sales</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" id="delivery_sales"
-                                            name="delivery_sales">
+                                        <input type="text" class="form-control form-control-sm @error('delivery_sales') is-invalid @enderror" id="delivery_sales" name="delivery_sales" value="{{ old('delivery_sales') }}">
+                                        @error('delivery_sales')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <!-- Supervisor -->
                                 <div class="form-group row mb-3">
                                     <label for="delivery_spv" class="col-sm-3 col-form-label text-end">Supervisor</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm" id="delivery_spv"
-                                            name="delivery_spv">
+                                        <input type="text" class="form-control form-control-sm @error('delivery_spv') is-invalid @enderror" id="delivery_spv" name="delivery_spv" value="{{ old('delivery_spv') }}">
+                                        @error('delivery_spv')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <!-- Select Unit -->
                                 <div class="form-group row mb-3">
-                                    <label for="unit_selection" class="col-3 col-form-label text-end">Select
-                                        Unit</label>
+                                    <label for="unit_selection" class="col-3 col-form-label text-end">Select Unit</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" name="unit_selection" id="unit_selection" required>
+                                        <select class="form-control @error('unit_code') is-invalid @enderror" name="unit_selection" id="unit_selection">
                                             <option value="" selected hidden>Pilih Unit</option>
                                             @foreach ($units as $unit)
-                                                <option
-                                                    value="{{ $unit->id . '/' . $unit->unit_GUID . '/' . $unit->unit_code }}">
-                                                    {{ $unit->unit_code . ' - ' . $unit->unit_brand . ' - ' . $unit->unit_type }}
-                                                </option>
+                                            <option value="{{ $unit->id . '/' . $unit->unit_GUID . '/' . $unit->unit_code }}">
+                                                {{ $unit->unit_code . ' - ' . $unit->unit_type }}
+                                            </option>
                                             @endforeach
                                         </select>
+                                        @error('unit_code')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <!-- Tanggal Kirim -->
                                 <div class="form-group row mb-3">
-                                    <label for="driver_selection" class="col-sm-3 col-form-label text-end">Select
-                                        Driver</label>
+                                    <label for="delivery_date" class="col-sm-3 col-form-label text-end">Tanggal Kirim</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control" name="driver_selection" id="driver_selection"
-                                            required>
-                                            <option value="" selected hidden>Pilih Driver</option>
-                                            @foreach ($drivers as $driver)
-                                                <option value="{{ $driver->id . '/' . $driver->driver_GUID }}">
-                                                    {{ 'DRV-0' . $driver->id . ' - ' . $driver->driver_lname }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        <input type="date" class="form-control form-control-sm @error('delivery_date') is-invalid @enderror" id="delivery_date" name="delivery_date" value="{{ old('delivery_date') }}">
+                                        @error('delivery_date')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <!-- Alamat Tujuan -->
                                 <div class="form-group row mb-3">
-                                    <label for="delivery_date" class="col-sm-3 col-form-label text-end">Tanggal
-                                        Kirim</label>
+                                    <label for="delivery_addressTo" class="col-sm-3 col-form-label text-end">Alamat Tujuan</label>
                                     <div class="col-sm-9">
-                                        <input type="date" class="form-control form-control-sm" id="delivery_date"
-                                            name="delivery_date">
+                                        <input type="text" class="form-control form-control-sm @error('delivery_addressTo') is-invalid @enderror" id="delivery_addressTo" name="delivery_addressTo" value="{{ old('delivery_addressTo') }}">
+                                        @error('delivery_addressTo')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <!-- Alamat Email -->
                                 <div class="form-group row mb-3">
-                                    <label for="delivery_addressFrom" class="col-sm-3 col-form-label text-end">Alamat
-                                        Kirim</label>
+                                    <label for="delivery_custemail" class="col-sm-3 col-form-label text-end">Alamat Email</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"
-                                            id="delivery_addressFrom" name="delivery_addressFrom">
+                                        <input type="email" class="form-control form-control-sm @error('delivery_custemail') is-invalid @enderror" id="delivery_custemail" name="delivery_custemail" value="{{ old('delivery_custemail') }}">
+                                        @error('delivery_custemail')
+                                        <span class="invalid-feedback">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
+
+                                <!-- Note -->
                                 <div class="form-group row mb-3">
-                                    <label for="delivery_addressTo" class="col-sm-3 col-form-label text-end">Alamat
-                                        Tujuan</label>
+                                    <label for="delivery_description" class="col-sm-3 col-form-label text-end">Note</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control form-control-sm"
-                                            id="delivery_addressTo" name="delivery_addressTo">
+                                        <textarea class="form-control form-control-sm" name="delivery_description" id="delivery_description" cols="1-" rows="4">{{ old('delivery_description') }}</textarea>
                                     </div>
                                 </div>
-                                <div class="form-group row mb-3">
-                                    <label for="delivery_description"
-                                        class="col-sm-3 col-form-label text-end">Deskripsi</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control form-control-sm" name="delivery_description" id="delivery_description" cols="1-"
-                                            rows="4"></textarea>
+
+                                <!-- Tombol Submit -->
+                                <div class="row me-1 mb-4">
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-2" name="BtnSave" id="BtnSave">Save</button>
+                                        <a class="btn btn-secondary" href="{{ route('listing.delivery') }}" role="button">Close</a>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row me-1 mb-4">
-                                <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary me-2" name="BtnSave"
-                                        id="BtnSave">Save</button>
-                                    <a class="btn btn-secondary" href="{{ route('listing.delivery') }}" role="button">
-                                        Close</a>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-                </div>
-            </form>
 
-        </div>
-    </main>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</main>
 @endsection

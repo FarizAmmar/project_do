@@ -6,6 +6,7 @@ use App\Http\Controllers\DriverController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RequestStatusController;
+use App\Http\Controllers\ResiController;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\UnitController;
 use Illuminate\Support\Facades\Route;
@@ -22,9 +23,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Index
-Route::get('/', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::get('/', [ResiController::class, 'index'])->name('resi.search')->middleware('guest');
 
-Route::post('/', [LoginController::class, 'authenticate'])->name('login.auth');
+Route::get('/apps/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+
+Route::post('/apps/login', [LoginController::class, 'authenticate'])->name('login.auth');
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('login.logout');
 
@@ -68,10 +71,13 @@ Route::post('/entries/delivery/{id}/{delivery_GUID}', [DeliveryController::class
 Route::post('/listing/delivery', [DeliveryController::class, 'store'])->name('listing.delivery.store')->middleware('auth');
 
 // Delivery Order Update
-Route::put('/listing/delivery/{id}/{delivery_GUID}', [DeliveryController::class, 'update'])->name('entries.deliveries.update')->middleware('auth');
+Route::put('/listing/delivery/{id}/{delivery_GUID}/update', [DeliveryController::class, 'update'])->name('entries.deliveries.update')->middleware('auth');
 
-// Driver delete from database
+// Delivery delete from database
 Route::delete('/listing/delivery/{id}/{delivery_GUID}', [DeliveryController::class, 'destroy'])->name('entries.deliveries.delete')->middleware('auth');
+
+// Delivery status udpate to database
+Route::put('/listing/delivery/{id}/{delivery_GUID}', [DeliveryController::class, 'status'])->name('entries.deliveries.status')->middleware('auth');
 
 // Request Status
 Route::get('/listing/request_status', [RequestStatusController::class, 'index'])->name('listing.request.status')->middleware('auth');
@@ -81,6 +87,9 @@ Route::post('/entries/request_status/{id}/{guid}', [RequestStatusController::cla
 
 // Request Status Entries Update
 Route::put('/entries/request_status/{id}/{guid}', [RequestStatusController::class, 'update'])->name('entries.request.status.update')->middleware('auth');
+
+// Resi
+Route::post('/', [ResiController::class, 'search'])->name('search.resi')->middleware('guest');
 
 // Get Unit
 Route::get('/get-unit/{id}/{unit_GUID}/{unit_code}', [UnitController::class, 'getUnit']);

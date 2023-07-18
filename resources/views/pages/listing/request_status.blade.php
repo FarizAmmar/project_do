@@ -62,8 +62,9 @@
                                         @else
                                         @foreach ($deliveries as $delivery)
                                         <tr>
-                                            <td>
+                                            <td style="vertical-align: middle;">
                                                 <div class="d-flex align-items-center justify-content-center">
+                                                    @if ($delivery->delivery_status == "P")
                                                     <form
                                                         action="{{ route('entries.request.status', ['id' => $delivery->id, 'guid' => $delivery->delivery_GUID]) }}"
                                                         method="POST">
@@ -74,6 +75,13 @@
                                                             <i class="far fa-sticky-note"></i>
                                                         </button>
                                                     </form>
+                                                    @else
+                                                    <button class="btn btn-outline-warning btn-sm" type="button"
+                                                        name="BtnStatus" data-bs-toggle="modal"
+                                                        data-bs-target="#StatusModal-{{ $delivery->id }}-{{ $delivery->delivery_GUID }}">
+                                                        Status
+                                                    </button>
+                                                    @endif
                                                     {{-- <button type="button"
                                                         class="btn btn-sm btn-outline-danger btn-reject"
                                                         data-bs-toggle="modal"
@@ -82,13 +90,20 @@
                                                     </button> --}}
                                                 </div>
                                             </td>
-                                            <td>{{ $delivery->delivery_senderName }}</td>
-                                            <td>{{ $delivery->delivery_bbn }}</td>
-                                            <td>{{ $delivery->delivery_sales }}</td>
-                                            <td>{{ $delivery->delivery_spv }}</td>
-                                            <td>{{ $delivery->delivery_date }}</td>
-                                            <td>{{ $delivery->delivery_addressTo }}</td>
-                                            <td>{{ $delivery->delivery_custemail }}</td>
+                                            <td style="white-space: nowrap; vertical-align: middle;">{{
+                                                $delivery->delivery_senderName }}</td>
+                                            <td style="white-space: nowrap; vertical-align: middle;">{{
+                                                $delivery->delivery_bbn }}</td>
+                                            <td style="white-space: nowrap; vertical-align: middle;">{{
+                                                $delivery->delivery_sales }}</td>
+                                            <td style="white-space: nowrap; vertical-align: middle;">{{
+                                                $delivery->delivery_spv }}</td>
+                                            <td style="white-space: nowrap; vertical-align: middle;">{{
+                                                $delivery->delivery_date }}</td>
+                                            <td style="white-space: nowrap; vertical-align: middle;">{{
+                                                $delivery->delivery_addressTo }}</td>
+                                            <td style="white-space: nowrap; vertical-align: middle;">{{
+                                                $delivery->delivery_custemail }}</td>
                                             <td>
                                                 <button class="btn btn-outline-dark btn-sm" type="button"
                                                     data-bs-toggle="modal"
@@ -96,30 +111,34 @@
                                                                 <i class=" fas fa-sticky-note"></i>
                                                 </button>
                                             </td>
-                                            <td>
+                                            <td style="white-space: nowrap; vertical-align: middle;">
                                                 @switch($delivery->delivery_status)
                                                 @case('P')
-                                                Pending
+                                                <span class="btn btn-danger btn-sm">Pending</span>
                                                 @break
 
                                                 @case('PSJ')
-                                                Proses Surat Jalan
+                                                <span class="btn btn-info btn-sm">Proses Surat Jalan</span>
                                                 @break
 
                                                 @case('PP')
-                                                Proses PDI
+                                                <span class="btn btn-info btn-sm">Proses PDI</span>
                                                 @break
 
                                                 @case('PCP')
-                                                Proses cuci dan poles
+                                                <span class="btn btn-info btn-sm">Proses cuci dan poles</span>
                                                 @break
 
                                                 @case('PAK')
-                                                Proses antrian kirim
+                                                <span class="btn btn-info btn-sm">Proses antrian kirim</span>
                                                 @break
 
                                                 @case('S')
-                                                Proses Kirim
+                                                <span class="btn btn-info btn-sm">Proses Kirim</span>
+                                                @break
+
+                                                @case('A')
+                                                <span class="btn btn-success btn-sm">Approve</span>
                                                 @break
                                                 @default
 
@@ -170,31 +189,84 @@
 </div>
 @endforeach
 
-<!-- Modal Confirmation Delete -->
+<!-- Modal Statu -->
 @foreach ($deliveries as $delivery)
-<div class="modal fade" id="confirmModal-{{ $delivery->id }}-{{ $delivery->delivery_GUID }}" tabindex="-1"
+<div class="modal fade" id="StatusModal-{{ $delivery->id }}-{{ $delivery->delivery_GUID }}" tabindex="-1"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Important Message</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">STATUS OPTION</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                Apakah anda yakin untuk menghapus data record tersebut?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <form
-                    action="{{ route('entries.deliveries.delete', ['id' => $delivery->id, 'delivery_GUID' => $delivery->delivery_GUID]) }}"
-                    method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-success">Confirm</button>
-                </form>
-            </div>
+            <form
+                action="{{ route('entries.deliveries.status', ['id' => $delivery->id, 'delivery_GUID' => $delivery->delivery_GUID]) }}"
+                method="POST">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="row">
+                        <label for="status_resi" class="col-sm-2 col-form-label text-end">No. Resi</label>
+                        <div class="col-sm-6">
+                            <input class="form-control form-control-sm bg-light" type="text" name="status_resi"
+                                id="status_resi" value="{{ $delivery->unit->unit_VIN }}" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="request_status" class="col-sm-2 col-form-label text-end">Status</label>
+                        <div class="col-sm-6">
+                            <select class="form-control form-control-sm" name="request_status" id="request_status">
+                                <option value="{{ $delivery->delivery_status }}" selected hidden>
+                                    @switch($delivery->delivery_status)
+                                    @case('A')
+                                    Approve
+                                    @break
+
+                                    @case('P')
+                                    Pending
+                                    @break
+
+                                    @case('PSJ')
+                                    Proses Surat Jalan
+                                    @break
+
+                                    @case('PP')
+                                    Proses PDI
+                                    @break
+
+                                    @case('PCP')
+                                    Proses cuci dan poles
+                                    @break
+
+                                    @case('PAK')
+                                    Proses antrian kirim
+                                    @break
+
+                                    @case('S')
+                                    Proses Kirim
+                                    @break
+                                    @default
+
+                                    @endswitch
+                                </option>
+                                <option value="PSJ">Proses Surat Jalan</option>
+                                <option value="PP">Proses Pdi</option>
+                                <option value="PCP">Proses cuci dan poles</option>
+                                <option value="PAK">Proses antrian kirim</option>
+                                <option value="S">Proses Kirim</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+
+
+                    <button type="submit" class="btn btn-outline-success btn-sm">Changes</button>
+            </form>
         </div>
     </div>
+</div>
 </div>
 @endforeach
 @endsection

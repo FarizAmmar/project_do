@@ -84,7 +84,6 @@ class LoginController extends Controller
         }
 
         return back()->with('loginFailed', "Oops! Login failed. Please double-check your credentials and try again.");
-
     }
 
     public function logout(Request $request)
@@ -95,6 +94,6 @@ class LoginController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect(route('login'));
     }
 }

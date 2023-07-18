@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Delivery;
 use App\Models\Driver;
+use App\Models\Request_Status;
 use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -153,5 +154,27 @@ class DeliveryController extends Controller
         $delivery->delete();
 
         return redirect()->route('listing.delivery')->with('success', 'Delivery has been deleted successfully');
+    }
+
+    public function status(Request $request, string $id, string $guid)
+    {
+        $delivery = Delivery::where('id', $id)
+            ->where('delivery_GUID', $guid)
+            ->firstOrFail();
+
+        $status = new Request_Status();
+
+        // Update data delivery
+        $delivery->delivery_status = $request->input('request_status');
+        $status->status_process = $request->input('request_status');
+
+        $status->delivery_id = $id;
+        $status->status_guid = $guid;
+        $status->status_resi = $request->input('status_resi');
+
+        $delivery->save();
+        $status->save();
+
+        return redirect()->route('listing.request.status')->with('success', 'Delivery status has been updated successfully');
     }
 }

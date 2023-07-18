@@ -19,4 +19,9 @@ class Delivery extends Model
     {
         return $this->belongsTo(Driver::class);
     }
+
+    public function request_status()
+    {
+        return $this->hasMany(Request_Status::class, 'delivery_id');
+    }
 }

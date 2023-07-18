@@ -119,6 +119,7 @@
 
                 </div>
 
+                @if ($delivery->driver != null)
                 <div class="row mt-3">
                     <div class="col">
                         <div class="card">
@@ -173,6 +174,58 @@
                         </div>
                     </div>
                 </div>
+                @else
+                <div class="row mt-3">
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-header">
+                                Driver Details
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group row mb-3">
+                                    <label for="driver_lname" class="col-sm-3 col-form-label text-end">Last
+                                        Name</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-sm bg-light" id="driver_id"
+                                            name="driver_id" hidden value="">
+                                        <input type="text" class="form-control form-control-sm bg-light"
+                                            id="driver_lname" name="driver_lname" value="" readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="driver_KTP" class="col-sm-3 col-form-label text-end">KTP</label>
+                                    <div class="col-sm-4">
+                                        <input type="text" class="form-control form-control-sm bg-light" id="driver_KTP"
+                                            name="driver_KTP" readonly value="">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="driver_email" class="col-sm-3 col-form-label text-end">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" class="form-control form-control-sm bg-light"
+                                            id="driver_email" name="driver_email" readonly value="">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <label for="driver_stnk" class="col-sm-3 col-form-label text-end">STNK</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm bg-light"
+                                            id="driver_stnk" name="driver_stnk" readonly value="">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-5">
+                                    <label for="driver_phone" class="col-sm-3 col-form-label text-end">Phone</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control form-control-sm bg-light"
+                                            id="driver_phone" name="driver_phone" readonly value="">
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                @endif
 
             </div>
 
@@ -366,49 +419,6 @@
                                             <input type="text" class="form-control form-control-sm"
                                                 name="delivery_additional" id="delivery_additional"
                                                 value="{{ $delivery->delivery_additional }}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-3">
-                                        <label for="delivery_status"
-                                            class="col-sm-4 col-form-label text-end">Status</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control form-control-sm" name="delivery_status"
-                                                id="delivery_status">
-                                                <option value="{{ $delivery->delivery_status }}" selected hidden>
-                                                    @switch($delivery->delivery_status)
-                                                    @case('P')
-                                                    Pending
-                                                    @break
-
-                                                    @case('PSJ')
-                                                    Proses Surat Jalan
-                                                    @break
-
-                                                    @case('PP')
-                                                    Proses PDI
-                                                    @break
-
-                                                    @case('PCP')
-                                                    Proses cuci dan poles
-                                                    @break
-
-                                                    @case('PAK')
-                                                    Proses antrian kirim
-                                                    @break
-
-                                                    @case('S')
-                                                    Proses Kirim
-                                                    @break
-                                                    @default
-
-                                                    @endswitch
-                                                </option>
-                                                <option value="PSJ">Proses Surat Jalan</option>
-                                                <option value="PP">Proses Pdi</option>
-                                                <option value="PCP">Proses cuci dan poles</option>
-                                                <option value="PAK">Proses antrian kirim</option>
-                                                <option value="S">Proses Kirim</option>
-                                            </select>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-end">

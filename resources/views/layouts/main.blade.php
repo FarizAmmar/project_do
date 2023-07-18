@@ -33,6 +33,8 @@
     <div class="container-fluid">
         @yield('login-container')
     </div>
+    @elseif ($title == 'Search Resi')
+    @yield('container')
     @elseif ($title != 'Login')
     @include('partials.navbar')
 

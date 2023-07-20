@@ -75,21 +75,30 @@ class RequestStatusController extends Controller
             ->firstOrFail();
 
         $status = new Request_Status();
-        $drivers = explode('/', $request->input('driver_selection'));
-        $delivery->driver_id = $drivers[0];
-        $delivery->delivery_submited_by = auth()->user()->name;
-        $delivery->delivery_additional = $request->input('delivery_additional');
-        $delivery->delivery_status = "A";
 
-        $status->delivery_id = $id;
-        $status->status_guid = $guid;
-        $status->status_process = "A";
-        $status->status_resi = $delivery->unit->unit_VIN;
+        if ($request->input('btn-approve') == 'A') {
+            $drivers = explode('/', $request->input('driver_selection'));
+            $delivery->driver_id = $drivers[0];
+            $delivery->delivery_submited_by = auth()->user()->name;
+            $delivery->delivery_additional = $request->input('delivery_additional');
+            $delivery->delivery_status = "A";
 
-        $delivery->save();
-        $status->save();
+            $status->delivery_id = $id;
+            $status->status_guid = $guid;
+            $status->status_process = "A";
 
-        return redirect()->route('listing.request.status')->with('success', 'Record has been submit successfully.');
+            $status->status_resi = $delivery->unit->unit_VIN;
+
+            $delivery->save();
+            $status->save();
+
+            return redirect()->route('listing.request.status')->with('success', 'Record has been submit successfully.');
+        } elseif ($request->input('btn-reject') == 'R') {
+            $delivery->delivery_status = "R";
+            $delivery->save();
+
+            return redirect()->route('listing.request.status')->with('reject', 'Record has been rejected.');
+        }
     }
 
     /**

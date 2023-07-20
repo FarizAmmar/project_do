@@ -88,6 +88,25 @@
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </div>
+                                                @elseif ($delivery->delivery_status == "R")
+                                                <div class="d-flex align-items-center">
+                                                    <form
+                                                        action="{{ route('entries.deliveries.edit', ['id' => $delivery->id, 'delivery_GUID' => $delivery->delivery_GUID]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('POST')
+                                                        <button class="btn btn-sm btn-light btn-approve" id="btnEdit"
+                                                            type="submit">
+                                                            <i class="fas fa-pen-to-square"></i>
+                                                        </button>
+                                                    </form>
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-outline-danger btn-reject"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#confirmModal-{{ $delivery->id }}-{{ $delivery->delivery_GUID }}">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
                                                 @else
                                                 -
                                                 @endif
@@ -141,6 +160,10 @@
 
                                                 @case('A')
                                                 <span class="btn btn-success btn-sm">Approve</span>
+                                                @break
+
+                                                @case('R')
+                                                <span class="btn btn-danger btn-sm">Rejected</span>
                                                 @break
                                                 @default
 

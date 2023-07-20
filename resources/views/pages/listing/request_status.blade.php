@@ -27,6 +27,11 @@
             {{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
+        @elseif (session('reject'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('reject') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         @endif
 
         <div class="card mb-4">
@@ -75,6 +80,8 @@
                                                             <i class="far fa-sticky-note"></i>
                                                         </button>
                                                     </form>
+                                                    @elseif ($delivery->delivery_status == "R")
+                                                    -
                                                     @else
                                                     <button class="btn btn-outline-warning btn-sm" type="button"
                                                         name="BtnStatus" data-bs-toggle="modal"
@@ -139,6 +146,10 @@
 
                                                 @case('A')
                                                 <span class="btn btn-success btn-sm">Approve</span>
+                                                @break
+
+                                                @case('R')
+                                                <span class="btn btn-danger btn-sm">Rejected</span>
                                                 @break
                                                 @default
 

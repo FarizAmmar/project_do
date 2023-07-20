@@ -422,18 +422,28 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-end">
-                                        <button class="btn btn-success btn-sm me-2" type="submit">Save</button>
-                                        <a href="{{ route('listing.request.status') }}"
-                                            class="btn btn-outline-danger btn-sm">Close</a>
-                                    </div>
+                                        <button class="btn btn-success btn-sm me-2" name="btn-approve" type="submit"
+                                            value="A">Approve</button>
                                 </form>
+                                <form
+                                    action="{{ route('entries.request.status.update', ['id' => $delivery->id, 'guid' => $delivery->delivery_GUID]) }}"
+                                    method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <button class="btn btn-danger btn-sm me-2" name="btn-reject" type="submit"
+                                        value="R">Reject</button>
+                                </form>
+                                <a href="{{ route('listing.request.status') }}"
+                                    class="btn btn-outline-danger btn-sm">Close</a>
                             </div>
+
                         </div>
                     </div>
                 </div>
-
             </div>
+
         </div>
+    </div>
 
     </div>
 </main>

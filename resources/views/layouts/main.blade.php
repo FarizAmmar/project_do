@@ -92,10 +92,10 @@
 
                 var id = selectedData[0];
                 var unit_GUID = selectedData[1];
-                var unit_code = selectedData[2];
+                var unit_VIN = selectedData[2];
 
                 if (selectedOption !== '') {
-                    $.get('/get-unit/' + id + '/' + unit_GUID + '/' + unit_code, function(response) {
+                    $.get('/get-unit/' + id + '/' + unit_GUID + '/' + unit_VIN, function(response) {
                         var unitLicenseType = response.unit_LICENSE_type;
                         var unitLicenseTypeText = '';
 

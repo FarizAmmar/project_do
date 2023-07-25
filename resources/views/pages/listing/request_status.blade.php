@@ -2,6 +2,7 @@
 
 @section('container')
 <main>
+
     <div class="container-fluid px-4">
         <div
             class="bg-light text-uppercase d-flex justify-content-between align-items-center mt-4 mb-3 rounded p-3 shadow-sm">
@@ -49,6 +50,7 @@
                                             <th style="vertical-align: middle;">BBN</th>
                                             <th style="vertical-align: middle;">Sales</th>
                                             <th style="vertical-align: middle;">SPV</th>
+                                            <th style="vertical-align: middle;">Driver</th>
                                             <th style="vertical-align: middle;">Tanggal</th>
                                             <th style="vertical-align: middle;">Address</th>
                                             <th style="vertical-align: middle;">Email</th>
@@ -105,6 +107,9 @@
                                                 $delivery->delivery_sales }}</td>
                                             <td style="white-space: nowrap; vertical-align: middle;">{{
                                                 $delivery->delivery_spv }}</td>
+                                            <td style="white-space: nowrap; vertical-align: middle;">
+                                                {{ $delivery->driver ? $delivery->driver->driver_lname : '-' }}
+                                            </td>
                                             <td style="white-space: nowrap; vertical-align: middle;">{{
                                                 $delivery->delivery_date }}</td>
                                             <td style="white-space: nowrap; vertical-align: middle;">{{
@@ -217,14 +222,14 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="row">
-                        <label for="status_resi" class="col-sm-2 col-form-label text-end">No. Resi</label>
+                        <label for="status_resi" class="col-sm-3 col-form-label text-end">No. Rangka</label>
                         <div class="col-sm-6">
                             <input class="form-control form-control-sm bg-light" type="text" name="status_resi"
                                 id="status_resi" value="{{ $delivery->unit->unit_VIN }}" readonly>
                         </div>
                     </div>
                     <div class="row">
-                        <label for="request_status" class="col-sm-2 col-form-label text-end">Status</label>
+                        <label for="request_status" class="col-sm-3 col-form-label text-end">Status</label>
                         <div class="col-sm-6">
                             <select class="form-control form-control-sm" name="request_status" id="request_status">
                                 <option value="{{ $delivery->delivery_status }}" selected hidden>

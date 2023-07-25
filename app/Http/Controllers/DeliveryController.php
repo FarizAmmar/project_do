@@ -7,8 +7,10 @@ use App\Models\Driver;
 use App\Models\Request_Status;
 use App\Models\Unit;
 use App\Models\User;
+use DateTime;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 
 class DeliveryController extends Controller
 {
@@ -19,7 +21,7 @@ class DeliveryController extends Controller
     {
         return view('pages.listing.deliveries_listing', [
             'title' => 'Delivery Order Registration',
-            'deliveries' => Delivery::latest()->paginate(20),
+            'deliveries' => Delivery::latest()->paginate(6),
         ]);
     }
 
@@ -42,7 +44,7 @@ class DeliveryController extends Controller
         // Validasi input
         $request->validate([
             'delivery_senderName' => 'required',
-            'unit_code' => 'required',
+            'unit_selection' => 'required',
             'delivery_bbn' => 'required',
             'delivery_sales' => 'required',
             'delivery_spv' => 'required',
@@ -51,13 +53,19 @@ class DeliveryController extends Controller
             'delivery_custemail' => 'required|email',
         ]);
 
+        $isvaliddate = $this->CheckRecord($request->input('delivery_date'));
+
+        if (!$isvaliddate) {
+            return redirect()->back()->with('warning', 'Oops! It seems like this date is in high demand! They already have a lot of pending deliveries. Please consider assigning this delivery to another date.');
+        }
+
         $user_id = User::where('username', auth()->user()->username)->first();
 
         $delivery = new Delivery();
         $delivery->delivery_GUID = fake()->uuid();
         $delivery->unit_id = $request->input('unit_id');
         $delivery->delivery_senderName = $request->input('delivery_senderName');
-        $delivery->delivery_codeUnit = $request->input('unit_code');
+        // $delivery->delivery_codeUnit = $request->input('unit_code');
         $delivery->delivery_bbn = $request->input('delivery_bbn');
         $delivery->delivery_sales = $request->input('delivery_sales');
         $delivery->delivery_spv = $request->input('delivery_spv');
@@ -107,7 +115,7 @@ class DeliveryController extends Controller
         // Validasi input
         $request->validate([
             'delivery_senderName' => 'required',
-            'unit_code' => 'required',
+            // 'unit_code' => 'required',
             'delivery_bbn' => 'required',
             'delivery_sales' => 'required',
             'delivery_spv' => 'required',
@@ -126,7 +134,7 @@ class DeliveryController extends Controller
 
         $delivery->unit_id = $request->input('unit_id');
         $delivery->delivery_senderName = $request->input('delivery_senderName');
-        $delivery->delivery_codeUnit = $request->input('unit_code');
+        // $delivery->delivery_codeUnit = $request->input('unit_code');
         $delivery->delivery_bbn = $request->input('delivery_bbn');
         $delivery->delivery_sales = $request->input('delivery_sales');
         $delivery->delivery_spv = $request->input('delivery_spv');
@@ -135,7 +143,6 @@ class DeliveryController extends Controller
         $delivery->delivery_custemail = $request->input('delivery_custemail');
         $delivery->delivery_description = $request->input('delivery_description');
         $delivery->delivery_status = "P";
-
         $delivery->save();
 
         return redirect()->route('listing.delivery')->with('success', 'Delivery has been updated successfully');
@@ -176,5 +183,15 @@ class DeliveryController extends Controller
         $status->save();
 
         return redirect()->route('listing.request.status')->with('success', 'Delivery status has been updated successfully');
+    }
+
+    private function CheckRecord(string $date)
+    {
+        $datetime = Delivery::where('delivery_date', $date)->count();
+        if ($datetime > 6) {
+            return false;
+        }
+
+        return true;
     }
 }

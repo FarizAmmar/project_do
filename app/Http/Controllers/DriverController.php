@@ -15,7 +15,7 @@ class DriverController extends Controller
         // Driver Listing
         return view('pages.listing.driver_listing', [
             'title' => 'Driver Listing',
-            'drivers' => Driver::latest()->paginate(10)
+            'drivers' => Driver::latest()->paginate(6)
         ]);
     }
 
@@ -40,9 +40,9 @@ class DriverController extends Controller
         $validate = $request->validate([
             'driver_sname' => 'required|min:1|max:10',
             'driver_lname' => 'required|min:10|max:30',
-            'driver_KTP' => 'required|min:16|max:16',
-            'driver_email' => 'email:rfc,dns|required',
-            'driver_stnk' => 'required|min:8|max:8',
+            // 'driver_KTP' => 'required|min:16|max:16',
+            // 'driver_email' => 'email:rfc,dns|required',
+            // 'driver_stnk' => 'required|min:8|max:8',
             'driver_phone' => 'required|min:11|max:12',
         ], [
             'driver_sname.required' => 'The driver surname field is required.',
@@ -51,14 +51,14 @@ class DriverController extends Controller
             'driver_lname.required' => 'The driver full name field is required.',
             'driver_lname.min' => 'The driver full name must be at least :min characters.',
             'driver_lname.max' => 'The driver full name may not be greater than :max characters.',
-            'driver_KTP.required' => 'The driver KTP field is required.',
-            'driver_KTP.min' => 'The driver KTP must be exactly :min characters.',
-            'driver_KTP.max' => 'The driver KTP must be exactly :max characters.',
-            'driver_email.email' => 'The driver email must be a valid email address.',
-            'driver_email.required' => 'The driver email field is required.',
-            'driver_stnk.required' => 'The driver STNK field is required.',
-            'driver_stnk.min' => 'The driver STNK must be exactly :min characters.',
-            'driver_stnk.max' => 'The driver STNK must be exactly :max characters.',
+            // 'driver_KTP.required' => 'The driver KTP field is required.',
+            // 'driver_KTP.min' => 'The driver KTP must be exactly :min characters.',
+            // 'driver_KTP.max' => 'The driver KTP must be exactly :max characters.',
+            // 'driver_email.email' => 'The driver email must be a valid email address.',
+            // 'driver_email.required' => 'The driver email field is required.',
+            // 'driver_stnk.required' => 'The driver STNK field is required.',
+            // 'driver_stnk.min' => 'The driver STNK must be exactly :min characters.',
+            // 'driver_stnk.max' => 'The driver STNK must be exactly :max characters.',
             'driver_phone.required' => 'The driver phone number field is required.',
             'driver_phone.min' => 'The driver phone number must be at least :min characters.',
             'driver_phone.max' => 'The driver phone number may not be greater than :max characters.',
@@ -84,9 +84,9 @@ class DriverController extends Controller
         $driver->driver_GUID = fake()->uuid();
         $driver->driver_sname = $validate['driver_sname'];
         $driver->driver_lname = $validate['driver_lname'];
-        $driver->driver_KTP = $validate['driver_KTP'];
-        $driver->driver_email = $validate['driver_email'];
-        $driver->driver_stnk = $validate['driver_stnk'];
+        // $driver->driver_KTP = $validate['driver_KTP'];
+        // $driver->driver_email = $validate['driver_email'];
+        // $driver->driver_stnk = $validate['driver_stnk'];
         $driver->driver_phone = $validate['driver_phone'];
         $driver->save();
 

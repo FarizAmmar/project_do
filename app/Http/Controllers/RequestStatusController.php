@@ -17,7 +17,7 @@ class RequestStatusController extends Controller
     {
         return view('pages.listing.request_status', [
             'title' => 'Request Status',
-            'deliveries' => Delivery::latest()->paginate(20),
+            'deliveries' => Delivery::latest()->paginate(6),
         ]);
     }
 
@@ -74,10 +74,19 @@ class RequestStatusController extends Controller
             ->where('delivery_GUID', $guid)
             ->firstOrFail();
 
+        $drivers = explode('/', $request->input('driver_selection'));
+
+        //Check Driver Record
+        $isDriverValid = $this->CheckRecord($drivers[0]);
+
+        if (!$isDriverValid) {
+            return redirect()->back()->with('warning', 'Oops! It seems like this driver is in high demand! They already have a lot of pending deliveries. Please consider assigning this delivery to another driver.');
+        }
+
         $status = new Request_Status();
 
         if ($request->input('btn-approve') == 'A') {
-            $drivers = explode('/', $request->input('driver_selection'));
+
             $delivery->driver_id = $drivers[0];
             $delivery->delivery_submited_by = auth()->user()->name;
             $delivery->delivery_additional = $request->input('delivery_additional');
@@ -117,5 +126,16 @@ class RequestStatusController extends Controller
         // Lakukan apa pun yang Anda inginkan dengan $frontPart
 
         return $frontPart;
+    }
+
+    private function CheckRecord(int $driver_id)
+    {
+        $drvCount = Delivery::where('driver_id', $driver_id)->count();
+
+        if ($drvCount > 2) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

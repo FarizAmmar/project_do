@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('driver_GUID');
             $table->string('driver_sname');
             $table->string('driver_lname');
-            $table->string('driver_KTP');
-            $table->string('driver_email');
-            $table->string('driver_stnk');
+            $table->string('driver_KTP')->nullable();
+            $table->string('driver_email')->nullable();
+            $table->string('driver_stnk')->nullable();
             $table->string('driver_phone');
             $table->timestamps();
         });

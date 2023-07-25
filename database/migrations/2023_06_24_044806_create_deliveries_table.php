@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('delivery_GUID');
             $table->string('delivery_submited_by')->nullable();
             $table->string('delivery_senderName');
-            $table->string('delivery_codeUnit');
+            // $table->string('delivery_codeUnit');
             $table->string('delivery_bbn');
             $table->string('delivery_sales');
             $table->string('delivery_spv');

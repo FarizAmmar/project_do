@@ -26,6 +26,13 @@
         </div>
         <hr>
 
+        @if (session('warning'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ session('warning') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
         <div class="row mb-3">
             <div class="col-6">
                 {{-- Unit Registration --}}
@@ -37,19 +44,20 @@
                                 Unit Details
                             </div>
                             <div class="card-body">
-                                <div class="row mb-3">
+                                {{-- <div class="row mb-3">
                                     <label for="unit_code" class="col-3 col-form-label text-end">Kode Unit</label>
                                     <div class="col-3">
-                                        <input type="text" class="form-control form-control-sm bg-light" id="unit_id"
-                                            name="unit_id" value="{{ $delivery->unit->id }}" hidden>
+
                                         <input type="text" class="form-control form-control-sm bg-light" id="unit_code"
                                             name="unit_code" value="{{ $delivery->unit->unit_code }}" readonly>
 
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row mb-3">
                                     <label for="unit_type" class="col-3 col-form-label text-end">Tipe Unit</label>
                                     <div class="col-4">
+                                        <input type="text" class="form-control form-control-sm bg-light" id="unit_id"
+                                            name="unit_id" value="{{ $delivery->unit->id }}" hidden>
                                         <input type="text" class="form-control form-control-sm bg-light" id="unit_type"
                                             name="unit_type" value="{{ $delivery->unit->unit_type }}" readonly>
                                     </div>
@@ -83,7 +91,7 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="unit_condition" class="col-3 col-form-label text-end">Kondisi
+                                    {{-- <label for="unit_condition" class="col-3 col-form-label text-end">Kondisi
                                         Unit</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control form-control-sm bg-light"
@@ -99,7 +107,7 @@
 
                                         @endswitch
                                         readonly>
-                                    </div>
+                                    </div> --}}
                                     <label for="unit_color" class="col-3 col-form-label text-end">Warna Unit</label>
                                     <div class="col-4">
                                         <input type="text" class="form-control form-control-sm bg-light" id="unit_color"
@@ -128,8 +136,8 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group row mb-3">
-                                    <label for="driver_lname" class="col-sm-3 col-form-label text-end">Last
-                                        Name</label>
+                                    <label for="driver_lname" class="col-sm-3 col-form-label text-end">Nama
+                                        Lengkap</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-sm bg-light" id="driver_id"
                                             name="driver_id" hidden value="{{ $delivery->driver->id }}">
@@ -138,7 +146,7 @@
                                             value="{{ $delivery->driver->driver_lname }}" readonly>
                                     </div>
                                 </div>
-                                <div class="form-group row mb-3">
+                                {{-- <div class="form-group row mb-3">
                                     <label for="driver_KTP" class="col-sm-3 col-form-label text-end">KTP</label>
                                     <div class="col-sm-4">
                                         <input type="text" class="form-control form-control-sm bg-light" id="driver_KTP"
@@ -160,9 +168,9 @@
                                             id="driver_stnk" name="driver_stnk" readonly
                                             value="{{ $delivery->driver->driver_stnk }}">
                                     </div>
-                                </div>
-                                <div class="form-group row mb-5">
-                                    <label for="driver_phone" class="col-sm-3 col-form-label text-end">Phone</label>
+                                </div> --}}
+                                <div class="form-group row mb-2">
+                                    <label for="driver_phone" class="col-sm-3 col-form-label text-end">No. Telp</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control form-control-sm bg-light"
                                             id="driver_phone" name="driver_phone" readonly
@@ -181,10 +189,10 @@
                             <div class="card-header">
                                 Driver Details
                             </div>
-                            <div class="card-body">
+                            <div class="card-body pb-5">
                                 <div class="form-group row mb-3">
-                                    <label for="driver_lname" class="col-sm-3 col-form-label text-end">Last
-                                        Name</label>
+                                    <label for="driver_lname" class="col-sm-3 col-form-label text-end">Nama
+                                        Lengkap</label>
                                     <div class="col-sm-6">
                                         <input type="text" class="form-control form-control-sm bg-light" id="driver_id"
                                             name="driver_id" hidden value="">
@@ -192,7 +200,7 @@
                                             id="driver_lname" name="driver_lname" value="" readonly>
                                     </div>
                                 </div>
-                                <div class="form-group row mb-3">
+                                {{-- <div class="form-group row mb-3">
                                     <label for="driver_KTP" class="col-sm-3 col-form-label text-end">KTP</label>
                                     <div class="col-sm-4">
                                         <input type="text" class="form-control form-control-sm bg-light" id="driver_KTP"
@@ -212,9 +220,9 @@
                                         <input type="text" class="form-control form-control-sm bg-light"
                                             id="driver_stnk" name="driver_stnk" readonly value="">
                                     </div>
-                                </div>
-                                <div class="form-group row mb-5">
-                                    <label for="driver_phone" class="col-sm-3 col-form-label text-end">Phone</label>
+                                </div> --}}
+                                <div class="form-group row mb-2">
+                                    <label for="driver_phone" class="col-sm-3 col-form-label text-end">No. Telp</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control form-control-sm bg-light"
                                             id="driver_phone" name="driver_phone" readonly value="">
@@ -226,10 +234,9 @@
                     </div>
                 </div>
                 @endif
-
             </div>
 
-            <div class="col-6 h-100">
+            <div class="col-6">
                 {{-- Personal Selection --}}
                 <div class="card" style="padding-bottom: 5px;">
                     <div class="card-header">
@@ -275,18 +282,18 @@
 
                                     @if ($delivery->unit_id != '')
                                     <option value="{{ $delivery->unit_id }}" selected hidden>
-                                        {{ $delivery->unit->unit_code . ' - ' . $delivery->unit->unit_type }}
+                                        {{ $delivery->unit->unit_type . ' - ' . $delivery->unit->unit_VIN }}
                                     </option>
                                     @foreach ($units as $unit)
-                                    <option value="{{ $unit->id . '/' . $unit->unit_GUID . '/' . $unit->unit_code }}">
-                                        {{ $unit->unit_code . ' - ' . $unit->unit_type }}
+                                    <option value="{{ $unit->id . '/' . $unit->unit_GUID . '/' . $unit->unit_VIN }}">
+                                        {{ $unit->unit_type . ' - ' . $unit->unit_VIN }}
                                     </option>
                                     @endforeach
                                     @else
                                     <option value="" selected hidden>Pilih Unit</option>
                                     @foreach ($units as $unit)
-                                    <option value="{{ $unit->id . '/' . $unit->unit_GUID . '/' . $unit->unit_code }}">
-                                        {{ $unit->unit_code . ' - ' . $unit->unit_type }}
+                                    <option value="{{ $unit->id . '/' . $unit->unit_GUID . '/' . $unit->unit_VIN }}">
+                                        {{ $unit->unit_type . ' - ' . $unit->unit_VIN }}
                                     </option>
                                     @endforeach
                                     @endif
@@ -342,7 +349,7 @@
                         </div>
                     </div>
                     <div class="row me-1 mb-5">
-                        <div class="col-12 d-flex justify-content-end" style="margin-bottom: 68px;">
+                        <div class="col-12 d-flex justify-content-end" style="margin-bottom: 13px;">
                             {{-- <button type="submit" class="btn btn-primary me-2" name="BtnSave"
                                 id="BtnSave">Save</button>
                             <a class="btn btn-secondary" href="{{ route('listing.delivery') }}" role="button">
@@ -354,97 +361,86 @@
             </div>
         </div>
 
-        <div class="row mb-5">
-            <div class="col-12">
-
-                <div class="row">
-                    <div class="col-6">
-                        <div class="card">
-                            <div class="card-header">
-                                Additional Option
-                            </div>
-                            <div class="card-body">
-                                <form
-                                    action="{{ route('entries.request.status.update', ['id' => $delivery->id, 'guid' => $delivery->delivery_GUID]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <div class="form-group row mb-3">
-                                        <label for="delivery_queue" class="col-sm-4 col-form-label text-end">Nomer
-                                            Antrian</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control form-control-sm bg-light"
-                                                name="delivery_queue" id="delivery_queue" value="{{ $delivery->id }}"
-                                                readonly>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-3">
-                                        <label for="driver_selection" class="col-sm-4 col-form-label text-end">Select
-                                            Driver</label>
-                                        <div class="col-sm-8">
-                                            <select class="form-control" name="driver_selection" id="driver_selection"
-                                                required>
-
-                                                @if ($delivery->driver_id != null)
-                                                <option
-                                                    value="{{ $delivery->driver_id. '/' . $delivery->driver->driver_GUID }}"
-                                                    selected hidden>{{ 'DRV-' .
-                                                    str_pad($delivery->driver_id, 2,'0', STR_PAD_LEFT) . ' -
-                                                    ' . $delivery->driver->driver_lname }}</option>
-                                                @foreach ($drivers as $driver)
-                                                <option value="{{ $driver->id . '/' . $driver->driver_GUID }}">
-                                                    {{ 'DRV-' . str_pad($driver->id, 2, '0', STR_PAD_LEFT) . ' - ' .
-                                                    $driver->driver_lname }}
-                                                </option>
-                                                @endforeach
-                                                @else
-                                                <option value="" selected hidden>Pilih Driver</option>
-                                                @foreach ($drivers as $driver)
-                                                <option value="{{ $driver->id . '/' . $driver->driver_GUID }}">
-                                                    {{ 'DRV-' . str_pad($driver->id, 2, '0', STR_PAD_LEFT) . ' - ' .
-                                                    $driver->driver_lname }}
-                                                </option>
-                                                @endforeach
-                                                @endif
-
-
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row mb-3">
-                                        <label for="delivery_additional"
-                                            class="col-sm-4 col-form-label text-end">Aksesoris
-                                            Tambahan</label>
-                                        <div class="col-sm-8">
-                                            <input type="text" class="form-control form-control-sm"
-                                                name="delivery_additional" id="delivery_additional"
-                                                value="{{ $delivery->delivery_additional }}">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end">
-                                        <button class="btn btn-success btn-sm me-2" name="btn-approve" type="submit"
-                                            value="A">Approve</button>
-                                </form>
-                                <form
-                                    action="{{ route('entries.request.status.update', ['id' => $delivery->id, 'guid' => $delivery->delivery_GUID]) }}"
-                                    method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <button class="btn btn-danger btn-sm me-2" name="btn-reject" type="submit"
-                                        value="R">Reject</button>
-                                </form>
-                                <a href="{{ route('listing.request.status') }}"
-                                    class="btn btn-outline-danger btn-sm">Close</a>
-                            </div>
-
-                        </div>
+        <div class="row pb-5">
+            <div class="col-6"></div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        Additional Option
                     </div>
+                    <div class="card-body">
+                        <form
+                            action="{{ route('entries.request.status.update', ['id' => $delivery->id, 'guid' => $delivery->delivery_GUID]) }}"
+                            method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group row mb-3">
+                                <label for="delivery_queue" class="col-sm-4 col-form-label text-end">Nomer
+                                    Antrian</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control form-control-sm bg-light"
+                                        name="delivery_queue" id="delivery_queue" value="{{ $delivery->id }}" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="driver_selection" class="col-sm-4 col-form-label text-end">Select
+                                    Driver</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="driver_selection" id="driver_selection" required>
+
+                                        @if ($delivery->driver_id != null)
+                                        <option value="{{ $delivery->driver_id. '/' . $delivery->driver->driver_GUID }}"
+                                            selected hidden>{{ 'DRV-' .
+                                            str_pad($delivery->driver_id, 2,'0', STR_PAD_LEFT) . ' -
+                                            ' . $delivery->driver->driver_lname }}</option>
+                                        @foreach ($drivers as $driver)
+                                        <option value="{{ $driver->id . '/' . $driver->driver_GUID }}">
+                                            {{ 'DRV-' . str_pad($driver->id, 2, '0', STR_PAD_LEFT) . ' - ' .
+                                            $driver->driver_lname }}
+                                        </option>
+                                        @endforeach
+                                        @else
+                                        <option value="" selected hidden>Pilih Driver</option>
+                                        @foreach ($drivers as $driver)
+                                        <option value="{{ $driver->id . '/' . $driver->driver_GUID }}">
+                                            {{ 'DRV-' . str_pad($driver->id, 2, '0', STR_PAD_LEFT) . ' - ' .
+                                            $driver->driver_lname }}
+                                        </option>
+                                        @endforeach
+                                        @endif
+
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-3">
+                                <label for="delivery_additional" class="col-sm-4 col-form-label text-end">Aksesoris
+                                    Tambahan</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control form-control-sm" name="delivery_additional"
+                                        id="delivery_additional" value="{{ $delivery->delivery_additional }}">
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-success btn-sm me-2" name="btn-approve" type="submit"
+                                    value="A">Approve</button>
+                        </form>
+                        <form
+                            action="{{ route('entries.request.status.update', ['id' => $delivery->id, 'guid' => $delivery->delivery_GUID]) }}"
+                            method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button class="btn btn-danger btn-sm me-2" name="btn-reject" type="submit"
+                                value="R">Reject</button>
+                        </form>
+                        <a href="{{ route('listing.request.status') }}" class="btn btn-outline-danger btn-sm">Close</a>
+                    </div>
+
                 </div>
             </div>
-
         </div>
-    </div>
 
     </div>
+
 </main>
 @endsection

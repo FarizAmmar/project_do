@@ -73,9 +73,9 @@
                                                 <div class="d-flex align-items-center">
                                                     <form
                                                         action="{{ route('entries.deliveries.edit', ['id' => $delivery->id, 'delivery_GUID' => $delivery->delivery_GUID]) }}"
-                                                        method="POST">
+                                                        method="GET">
                                                         @csrf
-                                                        @method('POST')
+                                                        @method('GET')
                                                         <button class="btn btn-sm btn-light btn-approve" id="btnEdit"
                                                             type="submit">
                                                             <i class="fas fa-pen-to-square"></i>

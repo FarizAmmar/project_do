@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('units', function (Blueprint $table) {
             $table->id();
             $table->string('unit_GUID');
-            $table->string('unit_code');
+            // $table->string('unit_code');
             $table->string('unit_type');
-            $table->string('unit_condition');
+            // $table->string('unit_condition');
             $table->string('unit_VIN');
             $table->string('unit_LICENSE');
             $table->string('unit_LICENSE_type');
             $table->string('unit_color');
-            $table->string('unit_RegYear');
+            // $table->string('unit_RegYear');
             $table->timestamps();
         });
     }

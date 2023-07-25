@@ -65,13 +65,13 @@ Route::get('/listing/delivery', [DeliveryController::class, 'index'])->name('lis
 Route::get('/entries/delivery', [DeliveryController::class, 'create'])->name('entries.deliveries')->middleware('auth');
 
 // Delivery Order Edit Page
-Route::post('/entries/delivery/{id}/{delivery_GUID}', [DeliveryController::class, 'edit'])->name('entries.deliveries.edit')->middleware('auth');
+Route::get('/entries/delivery/{id}/{delivery_GUID}', [DeliveryController::class, 'edit'])->name('entries.deliveries.edit')->middleware('auth');
 
 // Delivery Order Store
 Route::post('/listing/delivery', [DeliveryController::class, 'store'])->name('listing.delivery.store')->middleware('auth');
 
 // Delivery Order Update
-Route::put('/listing/delivery/{id}/{delivery_GUID}/update', [DeliveryController::class, 'update'])->name('entries.deliveries.update')->middleware('auth');
+Route::put('/listing/delivery/{id}/{delivery_GUID}/update', [DeliveryController::class, 'update'])->name('listing.deliveries.update')->middleware('auth');
 
 // Delivery delete from database
 Route::delete('/listing/delivery/{id}/{delivery_GUID}', [DeliveryController::class, 'destroy'])->name('entries.deliveries.delete')->middleware('auth');
@@ -83,7 +83,7 @@ Route::put('/listing/delivery/{id}/{delivery_GUID}', [DeliveryController::class,
 Route::get('/listing/request_status', [RequestStatusController::class, 'index'])->name('listing.request.status')->middleware('auth');
 
 // Request Status Entries
-Route::post('/entries/request_status/{id}/{guid}', [RequestStatusController::class, 'edit'])->name('entries.request.status')->middleware('auth');
+Route::get('/entries/request_status/{id}/{guid}', [RequestStatusController::class, 'edit'])->name('entries.request.status')->middleware('auth');
 
 // Request Status Entries Update
 Route::put('/entries/request_status/{id}/{guid}', [RequestStatusController::class, 'update'])->name('entries.request.status.update')->middleware('auth');
@@ -92,7 +92,7 @@ Route::put('/entries/request_status/{id}/{guid}', [RequestStatusController::clas
 Route::post('/', [ResiController::class, 'search'])->name('search.resi')->middleware('guest');
 
 // Get Unit
-Route::get('/get-unit/{id}/{unit_GUID}/{unit_code}', [UnitController::class, 'getUnit']);
+Route::get('/get-unit/{id}/{unit_GUID}/{unit_VIN}', [UnitController::class, 'getUnit']);
 
 // Get Driver
 Route::get('/get-driver/{id}/{unit_GUID}', [DriverController::class, 'getDriver']);

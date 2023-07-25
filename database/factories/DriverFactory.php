@@ -24,9 +24,9 @@ class DriverFactory extends Factory
             'driver_GUID' => fake()->uuid(),
             'driver_sname' => explode(' ', $faker->name())[0],
             'driver_lname' => fake()->name(),
-            'driver_KTP' => $faker->nik(),
-            'driver_email' => fake()->email(),
-            'driver_stnk' => $faker->numerify('### #### ##'),
+            // 'driver_KTP' => $faker->nik(),
+            // 'driver_email' => fake()->email(),
+            // 'driver_stnk' => $faker->numerify('### #### ##'),
             'driver_phone' => '0' . substr($faker->e164PhoneNumber, 3)
         ];
     }

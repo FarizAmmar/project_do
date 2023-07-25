@@ -25,8 +25,9 @@
         </div>
         <hr>
 
-        <form action="/listing/delivery/{{ $delivery->id }}/{{ $delivery->delivery_GUID }}/update" class="mb-5"
-            method="POST">
+        <form
+            action="{{ route('listing.deliveries.update', ['id' => $delivery->id, 'delivery_GUID' => $delivery->delivery_GUID]) }}"
+            class="mb-5" method="POST">
             @csrf
             @method('PUT')
             <div class="row">
@@ -40,20 +41,21 @@
                                     Unit Details
                                 </div>
                                 <div class="card-body">
-                                    <div class="row mb-3">
+                                    {{-- <div class="row mb-3">
                                         <label for="unit_code" class="col-3 col-form-label text-end">Kode Unit</label>
                                         <div class="col-3">
-                                            <input type="text" class="form-control form-control-sm bg-light"
-                                                id="unit_id" name="unit_id" value="{{ $delivery->unit->id }}" hidden>
+
                                             <input type="text" class="form-control form-control-sm bg-light"
                                                 id="unit_code" name="unit_code" value="{{ $delivery->unit->unit_code }}"
                                                 readonly>
 
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="row mb-3">
                                         <label for="unit_type" class="col-3 col-form-label text-end">Tipe Unit</label>
                                         <div class="col-4">
+                                            <input type="text" class="form-control form-control-sm bg-light"
+                                                id="unit_id" name="unit_id" value="{{ $delivery->unit->id }}" hidden>
                                             <input type="text" class="form-control form-control-sm bg-light"
                                                 id="unit_type" name="unit_type" value="{{ $delivery->unit->unit_type }}"
                                                 readonly>
@@ -88,7 +90,7 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="unit_condition" class="col-3 col-form-label text-end">Kondisi
+                                        {{-- <label for="unit_condition" class="col-3 col-form-label text-end">Kondisi
                                             Unit</label>
                                         <div class="col-sm-2">
                                             <input type="text" class="form-control form-control-sm bg-light"
@@ -103,7 +105,7 @@
                                             @default
 
                                             @endswitch readonly>
-                                        </div>
+                                        </div> --}}
                                         <label for="unit_color" class="col-3 col-form-label text-end">Warna Unit</label>
                                         <div class="col-4">
                                             <input type="text" class="form-control form-control-sm bg-light"
@@ -222,20 +224,20 @@
 
                                         @if ($delivery->unit_id != '')
                                         <option value="{{ $delivery->unit_id }}" selected hidden>
-                                            {{ $delivery->unit->unit_code . ' - ' . $delivery->unit->unit_type }}
+                                            {{ $delivery->unit->unit_type . ' - ' . $delivery->unit->unit_VIN }}
                                         </option>
                                         @foreach ($units as $unit)
                                         <option
-                                            value="{{ $unit->id . '/' . $unit->unit_GUID . '/' . $unit->unit_code }}">
-                                            {{ $unit->unit_code . ' - ' . $unit->unit_type }}
+                                            value="{{ $unit->id . '/' . $unit->unit_GUID . '/' . $unit->unit_VIN }}">
+                                            {{ $unit->unit_type . ' - ' . $unit->unit_VIN }}
                                         </option>
                                         @endforeach
                                         @else
                                         <option value="" selected hidden>Pilih Unit</option>
                                         @foreach ($units as $unit)
                                         <option
-                                            value="{{ $unit->id . '/' . $unit->unit_GUID . '/' . $unit->unit_code }}">
-                                            {{ $unit->unit_code . ' - ' . $unit->unit_type }}
+                                            value="{{ $unit->id . '/' . $unit->unit_GUID . '/' . $unit->unit_VIN }}">
+                                            {{ $unit->unit_type . ' - ' . $unit->unit_VIN }}
                                         </option>
                                         @endforeach
                                         @endif

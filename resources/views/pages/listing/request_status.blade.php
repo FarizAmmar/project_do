@@ -74,9 +74,8 @@
                                                     @if ($delivery->delivery_status == "P")
                                                     <form
                                                         action="{{ route('entries.request.status', ['id' => $delivery->id, 'guid' => $delivery->delivery_GUID]) }}"
-                                                        method="POST">
+                                                        method="GET">
                                                         @csrf
-                                                        @method('POST')
                                                         <button class="btn btn-sm btn-light btn-approve" id="btnEdit"
                                                             type="submit">
                                                             <i class="far fa-sticky-note"></i>

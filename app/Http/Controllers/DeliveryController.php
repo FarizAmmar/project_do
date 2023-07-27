@@ -134,7 +134,6 @@ class DeliveryController extends Controller
      */
     public function update(Request $request, string $id, string $delivery_GUID)
     {
-        dd($request);
         // Validasi input
         $request->validate([
             'delivery_senderName' => 'required',

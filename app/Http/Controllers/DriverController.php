@@ -64,14 +64,11 @@ class DriverController extends Controller
             'driver_phone.max' => 'The driver phone number may not be greater than :max characters.',
         ]);
 
-        $driveremails = Driver::where('driver_email', $validate['driver_email'])->exists();
+        // $driveremails = Driver::where('driver_email', $validate['driver_email'])->exists();
         $driverphone = Driver::where('driver_phone', $validate['driver_phone'])->exists();
 
-        if ($driveremails || $driverphone) {
+        if ($driverphone) {
             $errors = [];
-            if ($driveremails) {
-                $errors['driver_email'] = 'Email is already exist.';
-            }
 
             if ($driverphone) {
                 $errors['driver_phone'] = 'Phone number is already exist';

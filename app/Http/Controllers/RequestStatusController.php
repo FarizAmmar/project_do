@@ -77,10 +77,10 @@ class RequestStatusController extends Controller
         $drivers = explode('/', $request->input('driver_selection'));
 
         //Check Driver Record
-        $isDriverValid = $this->CheckRecord($drivers[0]);
+        $isDriverValid = $this->CheckRecord($drivers[0], $delivery['delivery_date']);
 
         if (!$isDriverValid) {
-            return redirect()->back()->with('warning', 'Oops! It seems like this driver is in high demand! They already have a lot of pending deliveries. Please consider assigning this delivery to another driver.');
+            return redirect()->back()->with('warning', 'Oops! It seems like this driver is currently busy with other deliveries. Please consider assigning this delivery to another driver.');
         }
 
         $status = new Request_Status();
@@ -128,13 +128,18 @@ class RequestStatusController extends Controller
         return $frontPart;
     }
 
-    private function CheckRecord(int $driver_id)
+    private function CheckRecord(int $driver_id, string $date)
     {
-        $drvCount = Delivery::where('driver_id', $driver_id)->count();
+        // Hitung jumlah orderan yang sudah diambil oleh driver pada tanggal tertentu
+        $drvCount = Delivery::where('driver_id', $driver_id)
+            ->where('delivery_date', $date)
+            ->count();
 
-        if ($drvCount > 2) {
+        if ($drvCount >= 2) {
+            // Jika driver telah mengambil 2 orderan pada tanggal tersebut, kembalikan false
             return false;
         } else {
+            // Jika driver belum mengambil 2 orderan pada tanggal tersebut, kembalikan true
             return true;
         }
     }

@@ -1,6 +1,14 @@
 @extends('layouts.main')
 
 @section('container')
+<style>
+    body {
+        background-image: url("/assets/background/bg.JPG");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+</style>
 {{-- Navbar --}}
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
     <div class="container-fluid">
@@ -47,14 +55,14 @@
                         @if ($info != null)
                         <div class="col-5">
                             <form>
-                                <div class="row mb-3">
+                                {{-- <div class="row mb-3">
                                     <label for="delivery_codeUnit"
                                         class="col-sm-3 col-form-label col-form-label-sm text-end">Code Unit</label>
                                     <div class="col-sm-2">
                                         <input type="text" class="form-control form-control-sm" id="delivery_codeUnit"
                                             readonly value="{{ $info->delivery_codeUnit }}">
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="row mb-3">
                                     <label for="delivery_senderName"
@@ -147,11 +155,69 @@
                             </ul>
                         </div>
                         @else
-                        <hr class="mb-5">
-                        <div class="d-flex justify-content-center">
-                            <div class="alert alert-dark text-center w-100" role="alert">
-                                Cari untuk menampilkan pesanan anda
-                            </div>
+                        <div class="col-5">
+                            <form>
+                                {{-- <div class="row mb-3">
+                                    <label for="delivery_codeUnit"
+                                        class="col-sm-3 col-form-label col-form-label-sm text-end">Code Unit</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="delivery_codeUnit"
+                                            readonly>
+                                    </div>
+                                </div> --}}
+
+                                <div class="row mb-3">
+                                    <label for="delivery_senderName"
+                                        class="col-sm-3 col-form-label col-form-label-sm text-end">Atas Nama</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control form-control-sm" id="delivery_senderName"
+                                            readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="unit_type"
+                                        class="col-sm-3 col-form-label col-form-label-sm text-end">Tipe Unit</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control form-control-sm" id="unit_type" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="delivery_senderName"
+                                        class="col-sm-3 col-form-label col-form-label-sm text-end">Supervisor</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control form-control-sm" id="delivery_senderName"
+                                            readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="delivery_senderName"
+                                        class="col-sm-3 col-form-label col-form-label-sm text-end">Sales</label>
+                                    <div class="col-sm-5">
+                                        <input type="text" class="form-control form-control-sm" id="delivery_senderName"
+                                            readonly>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="delivery_date"
+                                        class="col-sm-3 col-form-label col-form-label-sm text-end">Tanggal Kirim</label>
+                                    <div class="col-sm-5">
+                                        <input type="date" class="form-control form-control-sm" id="delivery_date"
+                                            readonly>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-6">
+                            <ul class="list-group">
+                                <div class="alert alert-dark text-center w-100" role="alert">
+                                    Cari untuk menampilkan data dan track record!
+                                </div>
+                            </ul>
                         </div>
                         @endif
 

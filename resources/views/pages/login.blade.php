@@ -1,6 +1,18 @@
 @extends('layouts.main')
 
 @section('login-container')
+<style>
+    .back-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 9999;
+        /* Pastikan tombol selalu muncul di atas konten lain */
+    }
+</style>
+<a href="/" class="btn btn-light back-button">
+    <i class='bx bxs-left-arrow'></i>
+</a>
 <div class="bg">
     <div class="container">
         <h1 class="mb-4 text-center">Login</h1>
@@ -26,7 +38,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-6">
-                    <a href="#" class="btn btn-forgot">Lupa Password?</a>
+                    {{-- <a href="#" class="btn btn-forgot">Lupa Password?</a> --}}
                 </div>
                 <div class="col-6">
                     <button class="btn btn-login w-100" type="submit" name="login">

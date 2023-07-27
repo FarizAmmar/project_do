@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Delivery;
-use App\Models\Driver;
-use App\Models\Request_Status;
+use DateTime;
 use App\Models\Unit;
 use App\Models\User;
-use DateTime;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\Driver;
+use App\Models\Delivery;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
+use App\Models\Request_Status;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DeliveryNotificationEmail;
 
 class DeliveryController extends Controller
 {
@@ -77,8 +77,30 @@ class DeliveryController extends Controller
 
         $delivery->save();
 
+        // Cari Unit
+        $unit = Unit::where('id', $delivery->unit_id = $request->input('unit_id'))->first();
+
+        // Kirim email notifikasi
+        $data = [
+            'delivery_senderName' => $request->input('delivery_senderName'),
+            'unit_name' => $unit->unit_type,
+            'unit_VIN' => $unit->unit_VIN,
+            'delivery_bbn' => $request->input('delivery_bbn'),
+            'delivery_sales' => $request->input('delivery_sales'),
+            'delivery_spv' => $request->input('delivery_spv'),
+            'delivery_date' => $request->input('delivery_date'),
+            'delivery_addressTo' => $request->input('delivery_addressTo'),
+            'delivery_custemail' => $request->input('delivery_custemail'),
+            'delivery_description' => $request->input('delivery_description'),
+        ];
+
+
+        Mail::to($request->input('delivery_custemail'))
+            ->send(new DeliveryNotificationEmail($data));
+
         return redirect()->route('listing.delivery')->with('success', 'Delivery has been added successfully');
     }
+
 
 
     /**
@@ -112,6 +134,7 @@ class DeliveryController extends Controller
      */
     public function update(Request $request, string $id, string $delivery_GUID)
     {
+        dd($request);
         // Validasi input
         $request->validate([
             'delivery_senderName' => 'required',

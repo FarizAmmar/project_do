@@ -62,7 +62,7 @@
                                     <tbody>
                                         @if ($deliveries->count() == 0)
                                         <tr>
-                                            <td colspan="10">
+                                            <td colspan="11">
                                                 No items found
                                             </td>
                                         </tr>
@@ -165,11 +165,12 @@
                                     </tbody>
 
                                 </table>
-                                <div class="row">
-                                    <div class="col">
-                                        {{ $deliveries->links() }}
-                                    </div>
-                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row mx-2">
+                            <div class="col">
+                                {{ $deliveries->links() }}
                             </div>
                         </div>
                     </div>

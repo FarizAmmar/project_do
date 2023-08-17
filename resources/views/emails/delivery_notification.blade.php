@@ -23,9 +23,9 @@
             <li class="list-group-item"><strong>Alamat Kirim:</strong> {{ $deliveryData['delivery_addressTo'] }}</li>
             <li class="list-group-item"><strong>Email Customer:</strong> {{ $deliveryData['delivery_custemail'] }}</li>
             <li class="list-group-item"><strong>Note:</strong> {{ $deliveryData['delivery_description'] }}</li>
-            <li class="list-group-item"><strong>Link:</strong> http://127.0.0.1:8000/</li>
         </ul>
-        <p class="mt-3">Thank you for choosing our delivery service!</p>
+        <p class="mt-3">Thank you for choosing our delivery service! For more detailed and extensive information, please
+            click <a href="http://127.0.0.1:8000/">here</a>.</p>
     </div>
 
     <!-- Load Bootstrap JS (optional) -->
